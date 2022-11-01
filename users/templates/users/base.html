@@ -1,0 +1,35 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+
+
+    {# Load the tag library #}
+    {% load django_bootstrap5 %}
+
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ description }}">
+    <title>{{ title }}</title>
+    <meta name="theme-color" content="#7952b3">
+    <link rel="shortcut icon" href="{% static 'global/images/logo.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'users/css/styles.css'%}" type="text/css">
+</head>
+
+<body class="text-center">
+
+{% block content %}
+{% endblock %}
+
+</body>
+
+
+
+</html>

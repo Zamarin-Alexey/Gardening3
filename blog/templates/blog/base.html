@@ -1,0 +1,110 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+
+
+    {# Load the tag library #}
+    {% load django_bootstrap5 %}
+
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ description }}">
+    <title>{{ title }}</title>
+    <meta name="theme-color" content="#7952b3">
+    <link href="{% static 'blog/css/styles1.css' %}" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'global/images/logo.png' %}" type="image/png">
+</head>
+
+<body>
+<header>
+    <div class="header">
+        <div class="container">
+            <button class="button xlarge open-sidebar-btn" onclick="open_close_sidebar()">&#9776;</button>
+        </div>
+        <div class="col-md-3 text-end container">
+            <a href="{% url 'login_form' %}">
+                <button type="button" class="btn btn-login btn-outline-success me-2 h-btn">Login</button>
+            </a>
+            <a href="{% url 'reg_form' %}">
+                <button type="button" class="btn btn-success h-btn">Sign-up</button>
+            </a>
+        </div>
+    </div>
+</header>
+
+<div class="sidebar w3-bar-block card animate-left" style="display:none" id="mySidebar">
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a href="#" class="nav-link active" aria-current="page">
+                <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#home"></use>
+                </svg>
+                Мои растения
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#speedometer2"></use>
+                </svg>
+                Блог
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#table"></use>
+                </svg>
+                Магазин
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#grid"></use>
+                </svg>
+                Библиотека растений
+            </a>
+        </li>
+    </ul>
+    <hr>
+    <div class="dropdown user-menu">
+        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
+           data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+            <strong>mdo</strong>
+        </a>
+        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+            <li><a class="dropdown-item" href="#">Личный кабинет</a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Выйти</a></li>
+        </ul>
+    </div>
+</div>
+
+<div id="main">
+
+
+    <main>
+
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <script src="{% static 'blog/js/blog.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</body>
+
+
+</html>

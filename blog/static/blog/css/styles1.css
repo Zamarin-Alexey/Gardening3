@@ -1,0 +1,166 @@
+html, body {
+    font-family: Verdana, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+body {
+    padding-top: 50px;
+}
+
+html {
+    overflow-x: hidden
+}
+
+.animate-left {
+    position: relative;
+    animation: animateleft 0.4s
+}
+
+@keyframes animateleft {
+    from {
+        left: -300px;
+        opacity: 0
+    }
+    to {
+        left: 0;
+        opacity: 1
+    }
+}
+
+.card {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)
+}
+
+.button {
+    border: none;
+    display: inline-block;
+    padding: 8px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.open-sidebar-btn {
+    padding-left: 30px;
+}
+
+.header, .hover-teal:hover {
+    color: #fff !important;
+    background-color: #198754 !important;
+    width: 100%;
+    position: fixed !important;
+    top: 0;
+    z-index: 2;
+    overflow: auto;
+    display: flex;
+    padding: 5px;
+}
+
+.large {
+    font-size: 18px !important
+}
+
+.xlarge {
+    font-size: 24px !important
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-weight: 400;
+    margin: 10px 0
+}
+
+.wide {
+    letter-spacing: 4px
+}
+
+h1 {
+    font-size: 36px
+}
+
+h2 {
+    font-size: 30px
+}
+
+h3 {
+    font-size: 24px
+}
+
+h4 {
+    font-size: 20px
+}
+
+h5 {
+    font-size: 18px
+}
+
+h6 {
+    font-size: 16px
+}
+
+.main, #main {
+    transition: margin-left .4s
+}
+
+.container {
+    padding: 0.01em 16px;
+    display: inline-flex;
+    vertical-align: middle;
+    align-items: center;
+}
+
+.preview {
+    margin: 30px auto;
+    text-align: center;
+}
+
+.sidebar {
+    height: 100%;
+    width: 200px;
+    background-color: #fff;
+    position: fixed !important;
+    z-index: 1;
+    overflow: auto;
+    padding: 20px 10px;
+}
+
+.bar-item {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.nav-pills {
+    --bs-nav-pills-border-radius: 0.375rem;
+    --bs-nav-pills-link-active-color: #fff;
+    --bs-nav-pills-link-active-bg: #198754;
+}
+
+.btn-login {
+    background-color: white;
+}
+
+.btn {
+    height: 45px;
+}
+
+.h-btn {
+    display: flow-root;
+}
+
+a {
+    text-decoration: none;
+}
