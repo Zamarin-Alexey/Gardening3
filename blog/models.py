@@ -28,12 +28,18 @@ class Plant(models.Model):
     planting_period = models.CharField(max_length=255)
     tags = models.CharField(max_length=255)
 
-
 class Review(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField
     estimation = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)])
     image = models.ImageField(upload_to='images/')
     tags = models.CharField(max_length=255)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    plant_id = models.ForeignKey(Plant, on_delete=models.CASCADE)
+
+class User_Plant(models.Model):
+    title = models.CharField(max_length=255)
+    date_start = models.DateField(auto_now=True)
+    date_finish = models.DateField
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     plant_id = models.ForeignKey(Plant, on_delete=models.CASCADE)
