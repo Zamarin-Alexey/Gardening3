@@ -5,5 +5,4 @@ from .views import *
 urlpatterns = [
     path('', home_page, name='blog_home'),
     path('post/<int:post_id>', post, name='post'),
-
 ]

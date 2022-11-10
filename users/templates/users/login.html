@@ -1,15 +1,23 @@
 {% extends 'users/base.html' %}
 
+{% load django_bootstrap5 %}
 {% load static %}
+
 {% block content %}
 
     <main class="form-signin w-100 m-auto">
-        <form>
+        <form method="POST">
+
+            {% csrf_token %}
+
             <div style="display: inline-block">
                 <img class="mb-4" src="{% static 'global/images/logo.png' %}" alt="" width="72" height="72">
                 <h1 class="h3 mb-3 fw-normal">Вход</h1>
             </div>
-            <div class="form-floating">
+
+            {% bootstrap_form form %}
+
+        <!--    <div class="form-floating">
                 <input type="email" class="form-control inp" id="floatingInput" placeholder="Адрес электронной почты">
                 <label for="floatingInput">Адрес электронной почты</label>
             </div>
@@ -23,6 +31,8 @@
                     <input type="checkbox" class="inp" value="remember-me"> Запомнить меня
                 </label>
             </div>
+        -->
+
             <button class="w-100 btn btn-lg btn-success" type="submit">Войти</button>
         </form>
     </main>
