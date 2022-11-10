@@ -81,7 +81,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: 36px
+    font-size: 42px;
+    margin: 50px 30px 25px;
 }
 
 h2 {
@@ -163,4 +164,21 @@ h6 {
 
 a {
     text-decoration: none;
+}
+
+.title_part {
+    display: inline-block;
+}
+
+.preview-image {
+    float: left;
+    margin: 0 30px 30px 0;
+}
+
+.post-container {
+    margin: 20px 30px 30px;
+}
+
+.sidebar-item {
+    padding-left: 40px;
 }
