@@ -1,15 +1,27 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=255)
-    body = models.TextField
-    image = models.ImageField(upload_to='image/')
-    tags = models.CharField(max_length=255)
-    publish_date = models.DateTimeField(auto_now_add=False)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, verbose_name='Заголовок')
+    body = models.TextField(verbose_name='Текст поста')
+    image = models.ImageField(upload_to='image/', verbose_name='Изображение')
+    tags = models.CharField(blank=True, max_length=255, verbose_name='Теги')
+    publish_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('post', kwargs={'post_id': self.pk})
+
+    class Meta:
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'
+        ordering = ['-publish_date']
 
 
 class Comment(models.Model):
@@ -28,6 +40,7 @@ class Plant(models.Model):
     planting_period = models.CharField(max_length=255)
     tags = models.CharField(max_length=255)
 
+
 class Review(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField
@@ -37,7 +50,8 @@ class Review(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     plant_id = models.ForeignKey(Plant, on_delete=models.CASCADE)
 
-class User_Plant(models.Model):
+
+class UserPlant(models.Model):
     title = models.CharField(max_length=255)
     date_start = models.DateField(auto_now=True)
     date_finish = models.DateField

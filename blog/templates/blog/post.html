@@ -2,45 +2,20 @@
 {% load static %}
 
 {% block content %}
-    <h1>Заголовок поста</h1>
+
+    <h1>{{ post.title }}</h1>
+    <div>{{ post.publish_date }}</div>
     <div class="post-container">
+        <div>{{ post.tags }}</div>
         <div class="preview-image">
-            <img src="{% static 'blog/images/3859efbfc493c6e5a6e718401ba4cb75-large.jpg' %}"
-                 alt=""
-                 width="300">
+            <img src="{{ post.image.url }}" alt="" width="300">
         </div>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit congue orci eget pharetra. Suspendisse
-        varius, magna quis ultricies congue, ante urna sollicitudin lectus, sed tincidunt velit eros quis leo. Duis nec
-        mollis nunc. Suspendisse quis cursus elit, a congue velit. In congue, sem feugiat blandit volutpat, diam tellus
-        vehicula odio, non ultricies mi diam sed purus. Duis ac urna nisl. Pellentesque tortor nunc, vehicula at turpis
-        vitae, volutpat suscipit lacus. Vestibulum feugiat lacinia libero. In lorem est, pellentesque a enim vitae,
-        placerat eleifend magna. Fusce eget auctor sapien. Morbi massa felis, vulputate sed ex vel, convallis molestie
-        magna.
-
-        Integer feugiat commodo erat in dignissim. Curabitur porta vehicula ante, a imperdiet metus consectetur nec. Nam
-        eu leo vel nibh maximus mollis. Phasellus ut eros tellus. Cras bibendum quis libero feugiat tempor. Fusce
-        ullamcorper, justo id fringilla auctor, tortor nulla convallis nisl, at aliquam elit augue at sem. Mauris ac
-        purus scelerisque felis facilisis lacinia. Sed ut molestie massa, quis posuere turpis. Vivamus malesuada
-        sollicitudin nisi at imperdiet. Etiam non purus scelerisque, eleifend eros in, pretium risus. In rutrum, dui id
-        efficitur auctor, ligula odio imperdiet elit, vel laoreet arcu erat at ante.
-
-        Nunc fringilla quam erat, non dictum quam porttitor a. Suspendisse sit amet odio consectetur, porta magna eget,
-        suscipit ipsum. Cras quis porttitor risus. Vivamus sit amet odio ligula. Ut vel aliquam enim. Etiam scelerisque
-        tempor porttitor. Nam quis varius urna, a lacinia sem. Interdum et malesuada fames ac ante ipsum primis in
-        faucibus. Sed sed risus id sem viverra gravida a at nisl. Suspendisse lectus nulla, rhoncus nec mi et, malesuada
-        fringilla tellus. Nulla facilisi. Sed faucibus scelerisque justo et porta. Cras in neque lobortis, porttitor
-        massa sit amet, vestibulum mi. Etiam enim eros, interdum in vestibulum placerat, tempus vitae ante.
-
-        Fusce rutrum non magna quis malesuada. Proin luctus quam vitae lectus pulvinar, nec vestibulum risus rhoncus.
-        Aliquam malesuada iaculis eros, eget feugiat enim dapibus eget. Aliquam erat volutpat. Cras aliquam rhoncus
-        lectus et volutpat. Duis ac tincidunt lorem, sed aliquam est. Proin quis aliquam massa, at tincidunt nibh. Fusce
-        convallis ex nibh, nec efficitur justo tincidunt a. Vivamus tempus cursus nunc, quis finibus nisi luctus nec.
-
-        Curabitur ut consequat tellus. Suspendisse nec pretium nunc. Mauris mollis, lacus vel rhoncus lacinia, justo
-        nunc molestie mi, sit amet accumsan nisi mauris feugiat metus. Maecenas condimentum consectetur dui. Orci varius
-        natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin porta convallis dolor. Integer
-        at augue ex. Aliquam facilisis ex eu nisi sodales scelerisque.
+        <div>
+            {{ post.body }}
+        </div>
+        <div>{{ post.user_id }}</div>
     </div>
 
-    <div>
+    </div>
+
 {% endblock %}
