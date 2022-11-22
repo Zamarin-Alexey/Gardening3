@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block content %}
+    <div class="w-100 m-auto form-post">
+        <form action="{% url 'add_post' %}" method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            {% comment %}<div class="form-error">{{ form.non_field_errors }}</div>
+
+            {% for field in form %}
+
+                <p><label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}:</label>{{ field }} </p>
+                <div class="form-error">{{ field.errors }}</div>
+
+            {% endfor %}{% endcomment %}
+
+
+             {% bootstrap_form form %}
+
+            <button class="w-100 btn btn-lg btn-success" type="submit">Опубликовать</button>
+        </form>
+    </div>
+{% endblock %}

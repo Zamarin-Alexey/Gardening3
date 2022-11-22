@@ -4,6 +4,12 @@
 {% block content %}
 
     {% if posts %}
+
+
+        <a href="{% url 'add_post' %}">
+            <button type="button" class="btn btn-success h-btn">Добавить пост</button>
+        </a>
+
         <div class="posts row mb-2">
 
             {% for post in posts %}

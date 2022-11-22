@@ -16,9 +16,10 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ description }}">
     <title>{{ title }}</title>
     <meta name="theme-color" content="#7952b3">
-    <link href="{% static 'blog/css/styles1.css' %}" rel="stylesheet">
+    <link href="{% static 'blog/css/styles.css' %}" rel="stylesheet">
     <link rel="shortcut icon" href="{% static 'global/images/logo.png' %}" type="image/png">
 </head>
 
@@ -35,11 +36,6 @@
             <a href="{% url 'reg_form' %}">
                 <button type="button" class="btn btn-success h-btn">Sign-up</button>
             </a>
-
-            <a href="{% url 'logout_form' %}">
-                <button type="button" class="btn btn-success h-btn">Logout</button>
-            </a>
-
         </div>
     </div>
 </header>
@@ -47,16 +43,24 @@
 <div class="sidebar w3-bar-block card animate-left" style="display:none" id="mySidebar">
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="#" class="nav-link active sidebar-item" aria-current="page">Мои растения</a>
+            <a href="#" class="nav-link active" aria-current="page">
+                Мои растения
+            </a>
         </li>
         <li>
-            <a href="{% url 'blog_home' %}" class="nav-link link-dark sidebar-item">Садоводство</a>
+            <a href="{% url 'blog_home' %}" class="nav-link link-dark">
+                Блог
+            </a>
         </li>
         <li>
-            <a href="#" class="nav-link link-dark sidebar-item">Магазин</a>
+            <a href="#" class="nav-link link-dark">
+                Магазин
+            </a>
         </li>
         <li>
-            <a href="#" class="nav-link link-dark sidebar-item">Сборник растений</a>
+            <a href="#" class="nav-link link-dark">
+                Библиотека растений
+            </a>
         </li>
     </ul>
     <hr>
@@ -67,7 +71,7 @@
             <strong>mdo</strong>
         </a>
         <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-            <li><a class="dropdown-item" href="#">Настройки</a></li>
+            <li><a class="dropdown-item" href="#">Личный кабинет</a></li>
             <li>
                 <hr class="dropdown-divider">
             </li>
@@ -76,6 +80,9 @@
     </div>
 </div>
 
+<div id="main">
+
+
     <main>
 
         {% block content %}
@@ -83,7 +90,8 @@
     </main>
 
     <script src="{% static 'blog/js/blog.js' %}"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</div>
 </body>
 
 

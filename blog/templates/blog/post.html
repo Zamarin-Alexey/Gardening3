@@ -2,20 +2,19 @@
 {% load static %}
 
 {% block content %}
-
-    <h1>{{ post.title }}</h1>
-    <div>{{ post.publish_date }}</div>
-    <div class="post-container">
-        <div>{{ post.tags }}</div>
-        <div class="preview-image">
-            <img src="{{ post.image.url }}" alt="" width="300">
+    <div class="w-100 m-auto">
+        <h1>{{ post.title }}</h1>
+        <div>{{ post.publish_date }}</div>
+        <div class="post-container">
+            <div>{{ post.tags }}</div>
+            <div class="preview-image">
+                <img src="{{ post.image.url }}" alt="" width="300">
+            </div>
+            <div>
+                {{ post.body }}
+            </div>
+            <div>{{ post.user_id }}</div>
         </div>
-        <div>
-            {{ post.body }}
-        </div>
-        <div>{{ post.user_id }}</div>
-    </div>
 
     </div>
-
 {% endblock %}
