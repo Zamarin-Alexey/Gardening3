@@ -1,4 +1,4 @@
-{% extends 'users/base.html' %}
+{% extends 'users/users_base.html' %}
 
 {% load django_bootstrap5 %}
 {% load static %}
@@ -14,9 +14,8 @@
                 <h1 class="h3 mb-3 fw-normal">Создание аккаунта</h1>
             </div>
 
-            {% bootstrap_form form %}
-
-            <button type="submit" class="btn btn-success btn-block">Регистрация</button>
+            {% bootstrap_form form layout='' %}
+            <button type="submit" class="btn btn-success btn-block">Создать аккаунт</button>
         </form>
     </main>
 

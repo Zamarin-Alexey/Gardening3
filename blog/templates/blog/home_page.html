@@ -3,11 +3,19 @@
 
 {% block content %}
 
+    <div class="width-organizer">
+
+    {% if user.is_authenticated %}
+
+    <a href="{% url 'add_post' %}">
+        <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Добавить пост</button>
+    </a>
+
+    {% endif %}
+
     {% if posts %}
 
-        <a href="{% url 'add_post' %}">
-            <button type="button" class="btn btn-success h-btn">Добавить пост</button>
-        </a>
+
 
         <div class="posts row mb-2">
 
@@ -33,5 +41,5 @@
     {% else %}
         <p>Посты отсутствуют</p>
     {% endif %}
-
+    </div>
 {% endblock %}

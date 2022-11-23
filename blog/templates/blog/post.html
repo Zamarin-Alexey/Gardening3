@@ -1,4 +1,4 @@
-{% extends 'blog/../../../Gardening3/../../../templates/Gardening3/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
@@ -8,7 +8,9 @@
         <div class="post-container">
             <div>{{ post.tags }}</div>
             <div class="preview-image">
-                <img src="{{ post.image.url }}" alt="" width="300">
+                {% for image in images %}
+                    <img src="{{ image.image.url }}" alt="" width="300">
+                {% endfor %}
             </div>
             <div>
                 {{ post.body }}

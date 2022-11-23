@@ -1,4 +1,4 @@
-{% extends 'users/base.html' %}
+{% extends 'users/users_base.html' %}
 
 {% load django_bootstrap5 %}
 {% load static %}
@@ -32,11 +32,13 @@
                 </label>
             </div>
         -->
-
+        <div class="button_container">
             <button class="w-100 btn btn-lg btn-success" type="submit">Войти</button>
+        </div>
         </form>
         <a href="{% url 'reg_form' %}">
-            <button type="button" class="btn btn-success">Регистрация</button>
+{#            <button type="button" class="btn btn-success">Регистрация</button>#}
+            Регистрация
         </a>
     </main>
 

@@ -176,13 +176,15 @@ a {
 }
 
 .posts {
-    margin: 30px;
+    max-width: 1000px;
+    padding-top: 20px;
 }
 
 .post-container {
-    margin-bottom: 2%;
     margin-right: 15px;
+    margin-left: 15px;
     flex: 0 0 auto;
+    max-width: 470px;
     width: 49% !important;
 }
 
@@ -204,4 +206,20 @@ a {
     max-width: 500px;
     padding: 15px;
     z-index: 2;
+}
+
+main {
+    padding-left: 30px;
+    padding-right: 30px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+a {
+    color: #198754;
+}
+
+a:hover {
+    color: #1ac06f;
 }
