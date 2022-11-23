@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect
 
-from blog import models
 from blog.forms import *
 
 
 def home_page(request):
     posts = Post.objects.all()
-    return render(request, 'blog/home_page.html', {'title': 'Блог', 'posts': posts})
+    return render(request, 'home_page.html', {'title': 'Блог', 'posts': posts})
 
 
 def post_page(request, post_id):
