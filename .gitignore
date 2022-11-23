@@ -1,3 +1,4 @@
 /.idea
 /.venv
 migrations
+profile_images/**/*
