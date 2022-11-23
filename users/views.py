@@ -1,8 +1,12 @@
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 
+from .forms import UpdateUserForm, UpdateProfileForm
 from .forms import *
 
 
@@ -41,18 +45,25 @@ def user_logout(request):
 
 @login_required
 def profile(request):
-    # return render(request, 'users/profile.html')
+    user = request.user
+    return render(request, 'users/profile.html', {'title': user.username, 'user': {'username': user.username,
+                                                                         'email': user.email},
+                                                  'profile': user.profile})
+
+
+def edit_profile(request):
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)
-        # profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
 
-        if user_form.is_valid():  # and profile_form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
-            # profile_form.save()
-            # messages.success(request, 'Your profile is updated successfully')
-            return redirect('blog_home')
+            profile_form.save()
+            messages.success(request, 'Изменения сохранены')
+            return redirect(profile)
     else:
         user_form = UpdateUserForm(instance=request.user)
-        # profile_form = UpdateProfileForm(instance=request.user.profile)
-
-    return render(request, 'users/profile.html', {'user_form': user_form})  # , 'profile_form': profile_form})
+        profile_form = UpdateProfileForm(instance=request.user.profile)
+    return render(request, 'users/edit_profile.html', {'title': 'Редактирование моей страницы', 'user_form': user_form,
+                                                       'profile_form':
+        profile_form})
