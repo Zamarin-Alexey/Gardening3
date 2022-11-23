@@ -2,3 +2,5 @@
 /.venv
 migrations
 profile_images/**/*
+/media/
+db.sqlite3
