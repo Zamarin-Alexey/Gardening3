@@ -1,3 +1,4 @@
+import PIL
 from django.shortcuts import render, redirect
 from django.core.files.base import ContentFile
 
@@ -19,6 +20,7 @@ def post_page(request, post_id):
 
 
 def add_post(request):
+
     if request.method == 'POST':
         form = AddPostForm(request.POST, request.FILES)
         if form.is_valid():
@@ -32,7 +34,6 @@ def add_post(request):
                 image.image.save(f.name, ContentFile(data))
                 image.save()
             return redirect(post)
-
     else:
         form = AddPostForm()
     return render(request, 'blog/add_post.html', {'title': 'Добавление поста', 'form': form})

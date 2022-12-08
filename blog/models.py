@@ -37,12 +37,22 @@ class Comment(models.Model):
 
 
 class Plant(models.Model):
-    title = models.CharField(max_length=255)
-    description = models.TextField
+    title = models.CharField(max_length=255, verbose_name='Название')
+    description = models.TextField(verbose_name='Описание')
     image = models.ImageField(upload_to='images/')
-    conditions = models.TextField
-    planting_period = models.CharField(max_length=255)
+    conditions = models.TextField(verbose_name='Условия')
+    planting_period = models.CharField(max_length=255, verbose_name='Период посадки')
     tags = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('plant', kwargs={'plant_id': self.pk})
+
+    class Meta:
+        verbose_name = 'Растениe'
+        verbose_name_plural = 'Растения'
 
 
 class Review(models.Model):

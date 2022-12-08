@@ -227,3 +227,8 @@ a:hover {
 .image_carousel {
 
 }
+
+body div::selection {
+    color: #fff !important;
+    background-color: #1ea466 !important;
+}
