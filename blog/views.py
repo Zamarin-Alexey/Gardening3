@@ -1,4 +1,3 @@
-import PIL
 from django.shortcuts import render, redirect
 from django.core.files.base import ContentFile
 
@@ -15,19 +14,33 @@ def home_page(request):
 
 def post_page(request, post_id):
     post = Post.objects.get(pk=post_id)
-    images = Image.objects.filter(post=post.pk)
-    return render(request, 'blog/post.html', {'title': 'Пост#' + str(post_id), 'post': post, 'images': images})
+    if request.method == 'POST':
+        form = AddCommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user_id = request.user
+            form.post_id = post
+            form.save()
+            return redirect(post)
+    else:
+        form = AddCommentForm()
+        user = post.user
+        images = Image.objects.filter(post=post.pk)
+        profile = user.profile
+        comments = Comment.objects.filter(post_id=post)
+    return render(request, 'blog/post.html',
+                  {'title': 'Пост#' + str(post_id), 'post': post, 'images': images, 'user': user, 'profile': profile,
+                   'comments': comments, 'comment_form': form})
 
 
 def add_post(request):
-
     if request.method == 'POST':
         form = AddPostForm(request.POST, request.FILES)
         if form.is_valid():
             post = Post.objects.create(title=form.cleaned_data['title'],
                                        body=form.cleaned_data['body'],
                                        tags=form.cleaned_data['tags'],
-                                       user_id=request.user)
+                                       user=request.user)
             for f in request.FILES.getlist('images'):
                 data = f.read()
                 image = Image(post=post)

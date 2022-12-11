@@ -5,41 +5,43 @@
 
     <div class="width-organizer">
 
-    {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
 
-    <a href="{% url 'add_post' %}">
-        <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Добавить пост</button>
-    </a>
+            <a href="{% url 'add_post' %}">
+                <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Добавить пост</button>
+            </a>
 
-    {% endif %}
+        {% endif %}
 
-    {% if posts %}
+        {% if posts %}
 
 
 
-        <div class="posts row mb-2">
+            <div class="posts row mb-2">
 
-            {% for post in posts %}
+                {% for post in posts %}
 
-                <div class="post-container">
-                    <div class="my_row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                        <img height="200" width="auto !important" src="{{ post.image.url }}" alt="">
-                        <div class="col p-4 d-flex flex-column position-static">
-                            <h3 class="mb-0">{{ post_title }}</h3>
-                            <div class="mb-1 text-muted">{{ post.publish_date }}</div>
-                            <p class="card-text mb-auto">{{ post.body }}</p>
-                            {% if post.tags %}
-                                <strong class="d-inline-block mb-2 text-primary">{{ post.tags }}</strong>
-                            {% endif %}
-                            <a href="{% url 'post' post.pk %}" class="stretched-link">Открыть целиком</a>
+                    <div class="post-container">
+                        <div class="my_row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                            <img height="200" width="auto !important" src="{{ post.image.url }}" alt="">
+                            <div class="col p-4 d-flex flex-column position-static">
+                                <h3 class="card-element" style="margin-top: 0">{{ post.title }}</h3>
+                                <p class="card-text card-element">{{ post.body }}</p>
+                                <div class="card-element" style="display: flex">
+                                    {% if post.tags %}
+                                        <strong class="d-inline-block text-primary">{{ post.tags }}</strong>
+                                    {% endif %}
+                                    <div class="text-muted" style="margin-left: auto">{{ post.publish_date }}</div>
+                                </div>
+                                <a class="card-element" href="{% url 'post' post.pk %}">Открыть целиком</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
 
-        </div>
-    {% else %}
-        <p>Посты отсутствуют</p>
-    {% endif %}
+            </div>
+        {% else %}
+            <p>Посты отсутствуют</p>
+        {% endif %}
     </div>
 {% endblock %}

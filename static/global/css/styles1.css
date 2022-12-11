@@ -225,10 +225,76 @@ a:hover {
 }
 
 .image_carousel {
+    float: left;
+    margin: 15px 15px 15px 0;
+}
 
+.post-header {
+    padding-top: 20px;
+}
+
+.post-body {
+    padding: 15px;
+    min-height: 550px;
+}
+
+.comments {
+    margin: 15px;
+}
+
+.comment {
+    padding: 15px;
+    margin: 10px;
 }
 
 body div::selection {
     color: #fff !important;
     background-color: #1ea466 !important;
+}
+
+.account-img {
+    height: 100px;
+}
+
+.account-img-post {
+    height: 40px;
+}
+
+.account-row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.title {
+    display: flex;
+    margin: 20px auto 10px;
+    justify-content: center;
+}
+
+.w-75 {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.post-content {
+    display: flex;
+}
+
+.post-footer {
+    display: flex;
+    margin: 15px;
+}
+
+.card-text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+}
+
+.card-element {
+    margin-bottom: 10px;
 }

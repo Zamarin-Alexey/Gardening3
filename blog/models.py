@@ -9,7 +9,7 @@ class Post(models.Model):
     body = models.TextField(verbose_name='Текст поста')
     tags = models.CharField(blank=True, max_length=255, verbose_name='Теги')
     publish_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
 
     def __str__(self):
         return self.title
@@ -29,18 +29,23 @@ class Image(models.Model):
 
 
 class Comment(models.Model):
-    body = models.TextField
-    image = models.ImageField(upload_to='images/')
-    publish_date = models.DateTimeField(auto_now_add=False)
+    body = models.TextField(blank=True, verbose_name='Текст комментария')
+    image = models.ImageField(blank=True, upload_to='images/', verbose_name='Изображение')
+    publish_date = models.DateTimeField(auto_now_add=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+        ordering = ['publish_date']
 
 
 class Plant(models.Model):
     title = models.CharField(max_length=255, verbose_name='Название')
-    description = models.TextField(verbose_name='Описание')
+    description = models.TextField(verbose_name='Описание', default='Тут пока пусто')
     image = models.ImageField(upload_to='images/')
-    conditions = models.TextField(verbose_name='Условия')
+    conditions = models.TextField(verbose_name='Условия', default='Тут пока пусто')
     planting_period = models.CharField(max_length=255, verbose_name='Период посадки')
     tags = models.CharField(max_length=255)
 

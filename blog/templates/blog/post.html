@@ -1,45 +1,93 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load django_bootstrap5 %}
 
 {% block content %}
     <div class="w-75">
-        <h1>{{ post.title }}</h1>
-        <div>{{ post.publish_date }}</div>
-        <div>{{ post.tags }}</div>
-        {% if images %}
-            <div id="carouselExampleIndicators" class="carousel slide image_carousel w-50" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                            class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
+        <div class="post-header">
+            <a class="account-row" href="{% url 'profile_form' %}">
+                <div>
+                    <img class="rounded-circle account-img-post" src="{{ profile.avatar.url }} "
+                         style="cursor: pointer;" alt=""/>
                 </div>
-                <div class="carousel-inner">
-                    {% for image in images %}
-                        <div class="carousel-item active">
-                            <img src="{{ image.image.url }}" class="d-block w-100" style="width: 100% !important;" alt="...">
+                <div style="padding: 5px; align-items: center">{{ user.username }}</div>
+            </a>
+        </div>
+
+        <div class="post-body  border rounded">
+            <h1 class="title">{{ post.title }}</h1>
+            <div class="">
+                {% if images %}
+                    <div id="carouselExampleIndicators" class="carousel slide image_carousel w-50"
+                         data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for image in images %}
+                                <div class="carousel-item active">
+                                    <img src="{{ image.image.url }}" class="d-block rounded"
+                                         style="width: 100% !important;"
+                                         alt="...">
+                                </div>
+                            {% endfor %}
                         </div>
-                    {% endfor %}
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                                data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Предыдущий</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                                data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Следующий</span>
+                        </button>
+                    </div>
+
+                {% endif %}
+
+                <div style="padding: 15px">
+                    {{ post.body }}
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Предыдущий</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Следующий</span>
-                </button>
+
+
             </div>
 
-        {% endif %}
-        <div>
-            {{ post.body }}
         </div>
-        <div>{{ post.user_id }}</div>
+        <div class="post-footer">
+            <div>Теги: {{ post.tags }}</div>
+            <div style="margin-left: auto">Дата публикации: {{ post.publish_date }}</div>
+        </div>
+        <hr>
+        <div class="comments">
+            Комментарии
+            {% for comment in comments %}
+                <div class="comment border rounded">
+                    <a class="account-row" href="{% url 'profile_form' %}">
+                        <div>
+                            <img class="rounded-circle account-img-post" src="{{ comment.user_id.profile.avatar.url }} "
+                                 style="cursor: pointer;" alt=""/>
+                        </div>
+                        <div style="padding: 5px; align-items: center">{{ comment.user_id.username }}</div>
+                    </a>
+                    <div style="display: flex">
+                        {% if comment.image %}
+                            <img src="{{ comment.image.url }}" class="d-block rounded"
+                                 style="width: 25% !important; float: left"
+                                 alt="...">
+                        {% endif %}
+                        {% if comment.body %}
+                            {{ comment.body }}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
 
+            <hr>
+
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form comment_form %}
+
+                <button class="btn btn-lg btn-success" style="height: fit-content" type="submit">Отправить</button>
+            </form>
+        </div>
     </div>
 {% endblock %}
