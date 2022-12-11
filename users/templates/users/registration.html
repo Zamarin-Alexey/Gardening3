@@ -1,10 +1,8 @@
 {% extends 'users/users_base.html' %}
-
-{% load django_bootstrap5 %}
 {% load static %}
+{% load django_bootstrap5 %}
 
 {% block content %}
-
     <main class="form-signin w-100 m-auto">
         <form method="post">
 
@@ -20,3 +18,7 @@
     </main>
 
 {% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'users/js/user_base.js' %}"></script>
+{% endblock javascript%}

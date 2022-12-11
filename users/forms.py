@@ -29,8 +29,8 @@ class CustomUserCreationForm(UserCreationForm):
 
 class UpdateProfileForm(forms.ModelForm):
     avatar = forms.ImageField(widget=forms.ClearableFileInput(attrs={'class': 'form-control-file'}))
-    bio = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-
+    bio = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+#widget=forms.
     class Meta:
         model = Profile
         fields = ['avatar', 'bio']

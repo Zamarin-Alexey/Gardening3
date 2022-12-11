@@ -2,8 +2,6 @@
 <!doctype html>
 <html lang="ru">
 <head>
-
-
     {# Load the tag library #}
     {% load django_bootstrap5 %}
 
@@ -25,91 +23,70 @@
 
 <body>
 
-  <header class="py-1 mb-3 border-bottom">
-    <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1.5fr 1fr;">
-        <div class="container">
-            <button class="button xlarge open-sidebar-btn" onclick="open_close_sidebar()">&#9776;</button>
+    <header class="py-1 mb-3 border-bottom">
+        <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1.5fr 1fr;">
+            <div class="container">
+                <button class="button xlarge open-sidebar-btn" onclick="open_close_sidebar()">&#9776;</button>
+            </div>
+
+            <div class="d-flex align-items-center">
+
+                <form class="w-50% me-3">
+                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                </form>
+
+                {% if request.user.is_authenticated %}
+                   {% include 'user_menu.html' %}
+                {% else %}
+                    <a href="{% url 'login_form' %}">
+                        <button type="button" class="btn btn-success h-btn ">Личный кабинет</button>
+                    </a>
+                {% endif %}
+
+            </div>
         </div>
+    </header>
 
-        <div class="d-flex align-items-center">
-            <form class="w-50% me-3">
-                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-            </form>
 
-            {% if request.user.is_authenticated %}
+    <div class="sidebar w3-bar-block card animate-left" style="display:none" id="mySidebar">
+        <ul class="nav nav-pills flex-column mb-auto">
 
-               {% include 'user_menu.html' %}
-
-            {% else %}
-
-                <a href="{% url 'login_form' %}">
-                    <button type="button" class="btn btn-success h-btn ">Войти</button>
+            <li class="nav-item">
+                <a href="#" class="nav-link active" aria-current="page">
+                    Мои растения
                 </a>
-                <!--<a href="{#% url 'reg_form' %#}">
-                    <button type="button" class="btn btn-success h-btn">Sign-up</button>
-                </a> -->
+            </li>
 
-            {% endif %}
-        </div>
+            <li>
+                <a href="{% url 'blog_home' %}" class="nav-link link-dark">
+                    Блог
+                </a>
+            </li>
+
+            <li>
+                <a href="#" class="nav-link link-dark">
+                    Магазин
+                </a>
+            </li>
+
+            <li>
+                <a href="#" class="nav-link link-dark">
+                    Библиотека растений
+                </a>
+            </li>
+        </ul>
+        <hr>
+    </div>
+
+    <div id="main">
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <script type="text/javascript" src="{% static 'global/js/main.js' %}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     </div>
-  </header>
-
-
-<div class="sidebar w3-bar-block card animate-left" style="display:none" id="mySidebar">
-    <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-            <a href="#" class="nav-link active" aria-current="page">
-                Мои растения
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'blog_home' %}" class="nav-link link-dark">
-                Блог
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link link-dark">
-                Магазин
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link link-dark">
-                Библиотека растений
-            </a>
-        </li>
-    </ul>
-    <hr>
-        <div class="dropdown user-menu">
-        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownMenuUser"
-               data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <strong>{{ request.user.username }}</strong>
-            </a>
-            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownMenuUser">
-                <li><a class="dropdown-item" href="{% url 'profile_form' %}">Личный кабинет</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'logout_form' %}">Выйти</a></li>
-            </ul>
- </div>
-</div>
-
-<div id="main">
-
-
-    <main>
-
-        {% block content %}
-        {% endblock %}
-    </main>
-
-    <script type="text/javascript" src="{% static 'global/js/main.js' %}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-</div>
 </body>
-
-
 </html>
