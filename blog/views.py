@@ -38,7 +38,7 @@ def add_post(request):
         form = AddPostForm(request.POST, request.FILES)
         if form.is_valid():
             post = Post.objects.create(title=form.cleaned_data['title'],
-                                       body=form.cleaned_data['body'],
+                                       body=form.cleaned_data['body'].replace('\n', '<br />'),
                                        tags=form.cleaned_data['tags'],
                                        user=request.user)
             for f in request.FILES.getlist('images'):

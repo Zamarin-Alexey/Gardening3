@@ -23,9 +23,7 @@
                         <div class="carousel-inner">
                             {% for image in images %}
                                 <div class="carousel-item active">
-                                    <img src="{{ image.image.url }}" class="d-block rounded"
-                                         style="width: 100% !important;"
-                                         alt="...">
+                                    <img src="{{ image.image.url }}" class="d-block rounded carousel_image" alt="...">
                                 </div>
                             {% endfor %}
                         </div>
@@ -43,8 +41,8 @@
 
                 {% endif %}
 
-                <div style="padding: 15px">
-                    {{ post.body }}
+                <div style="padding-top: 15px">
+                    {{ post.body|safe }}
                 </div>
 
 
@@ -67,11 +65,9 @@
                         </div>
                         <div style="padding: 5px; align-items: center">{{ comment.user_id.username }}</div>
                     </a>
-                    <div style="display: flex">
+                    <div>
                         {% if comment.image %}
-                            <img src="{{ comment.image.url }}" class="d-block rounded"
-                                 style="width: 25% !important; float: left"
-                                 alt="...">
+                            <img src="{{ comment.image.url }}" class="d-block rounded comment-image" alt="...">
                         {% endif %}
                         {% if comment.body %}
                             {{ comment.body }}

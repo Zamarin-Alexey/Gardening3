@@ -229,6 +229,12 @@ a:hover {
     margin: 15px 15px 15px 0;
 }
 
+.carousel_image {
+    height: 400px !important;
+    width: 400px !important;
+    object-fit: cover
+}
+
 .post-header {
     padding-top: 20px;
 }
@@ -288,13 +294,21 @@ body div::selection {
 }
 
 .card-text {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 4;
-	-webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
 }
 
 .card-element {
     margin-bottom: 10px;
+}
+
+.comment-image {
+    width: 25%;
+    height: fit-content;
+    object-fit: cover;
+    float: left;
+    margin-right: 15px;
 }

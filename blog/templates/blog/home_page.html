@@ -26,7 +26,7 @@
                             <img height="200" width="auto !important" src="{{ post.image.url }}" alt="">
                             <div class="col p-4 d-flex flex-column position-static">
                                 <h3 class="card-element" style="margin-top: 0">{{ post.title }}</h3>
-                                <p class="card-text card-element">{{ post.body }}</p>
+                                <p class="card-text card-element">{{ post.body|safe }}</p>
                                 <div class="card-element" style="display: flex">
                                     {% if post.tags %}
                                         <strong class="d-inline-block text-primary">{{ post.tags }}</strong>
