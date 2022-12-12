@@ -5,7 +5,7 @@
 {% block content %}
     <div class="w-75">
         <div class="post-header">
-            <a class="account-row" href="{% url 'profile_form' %}">
+            <a class="account-row" href="{% url 'profile_form' post.user.pk %}">
                 <div>
                     <img class="rounded-circle account-img-post" src="{{ profile.avatar.url }} "
                          style="cursor: pointer;" alt=""/>
@@ -58,7 +58,7 @@
             Комментарии
             {% for comment in comments %}
                 <div class="comment border rounded">
-                    <a class="account-row" href="{% url 'profile_form' %}">
+                    <a class="account-row" href="{% url 'profile_form' post.user.pk %}">
                         <div>
                             <img class="rounded-circle account-img-post" src="{{ comment.user_id.profile.avatar.url }} "
                                  style="cursor: pointer;" alt=""/>

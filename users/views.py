@@ -45,9 +45,13 @@ def user_logout(request):
 
 
 @login_required
-def profile(request):
+def profile(request, user_id):
+    user = User.objects.get(pk=user_id)
+    is_owner = False
+    if request.user == user:
+        is_owner = True
     if request.method == 'POST':
-        user_form = UpdateUserForm(request.POST, instance=request.user)
+        user_form = UpdateUserForm(request.POST, instance=user)
         profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
 
         if user_form.is_valid() and profile_form.is_valid():
@@ -56,14 +60,15 @@ def profile(request):
             messages.success(request, 'Изменения сохранены')
             return redirect(profile)
     else:
-        user = request.user
         user_form = UpdateUserForm(instance=user)
         profile_form = UpdateProfileForm(instance=user.profile)
-    return render(request, 'users/profile.html', {'title': user.username, 'user': {'username': user.username, 'email': user.email},
-                                                  'profile': user.profile,
-                                                  'user_form': user_form,
-                                                  'profile_form': profile_form})
-
+    return render(request, 'users/profile.html',
+                  {'title': user.username, 'user': {'username': user.username, 'email': user.email},
+                   'profile': user.profile,
+                   'user_form': user_form,
+                   'profile_form': profile_form,
+                   'is_owner': is_owner
+                   })
 
 
 def validate_username(request):
