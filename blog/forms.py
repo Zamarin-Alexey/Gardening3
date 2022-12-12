@@ -17,13 +17,3 @@ class AddCommentForm(forms.ModelForm):
             'body': forms.Textarea(attrs={'rows':1}),
         }
 
-# class AddPlantForm(forms.Form):
-#     title = forms.CharField(max_length=255, label='Название')
-#     body = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}), label='Описание')
-#     conditions = forms.DateInput(widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}), label='Условия')
-#     planting_period = forms.CharField(max_length=255, verbose_name='Период посадки')
-#     images = forms.ImageField(required=False, label=u'Фотографии',
-#                               widget=forms.FileInput(attrs={'multiple': 'multiple'}))
-#     conditions = forms.CharField(verbose_name='Условия')
-#     planting_period = forms.CharField(max_length=255, verbose_name='Период посадки')
-#     tags = forms.CharField(max_length=255)

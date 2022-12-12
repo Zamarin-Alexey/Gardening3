@@ -4,7 +4,7 @@
     <strong>{{ request.user.username }}</strong>
 </a>
 <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownMenuUser">
-    <li><a class="dropdown-item" href="{% url 'profile_form' %}">Личный кабинет</a></li>
+    <li><a class="dropdown-item" href="{% url 'profile_pk' request.user.username %}">Личный кабинет</a></li>
     <li>
         <hr class="dropdown-divider">
     </li>

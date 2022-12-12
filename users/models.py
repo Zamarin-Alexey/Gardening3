@@ -13,3 +13,7 @@ class Profile(models.Model):
 
     def _str_(self):
         return self.user.username
+
+    class Meta:
+        verbose_name = 'Профиль'
+        verbose_name_plural = 'Учётные записи'

@@ -1,11 +1,11 @@
 import django.http
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 from .forms import UpdateUserForm, UpdateProfileForm
 from .forms import *
@@ -45,7 +45,18 @@ def user_logout(request):
 
 
 @login_required
-def profile(request):
+def profile(request, user_name=None):
+    user = get_object_or_404(User, username=user_name)
+
+    user_form = UpdateUserForm(instance=user)
+    profile_form = UpdateProfileForm(instance=user.profile)
+    return render(request, 'users/profile.html', {'title': user.username, 'user': user,
+                                                  'profile': user.profile,
+                                                  'user_form': user_form,
+                                                  'profile_form': profile_form})
+
+
+def edit_profile(request):
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)
         profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
@@ -59,7 +70,7 @@ def profile(request):
         user = request.user
         user_form = UpdateUserForm(instance=user)
         profile_form = UpdateProfileForm(instance=user.profile)
-    return render(request, 'users/profile.html', {'title': user.username, 'user': {'username': user.username, 'email': user.email},
+    return render(request, 'users/profile.html', {'title': user.username, 'user': user,
                                                   'profile': user.profile,
                                                   'user_form': user_form,
                                                   'profile_form': profile_form})

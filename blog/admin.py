@@ -2,7 +2,6 @@ from django.contrib import admin
 
 from .models import *
 
-
 class PostsAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'publish_date', 'user_id')
     list_display_links = ('id', 'title')

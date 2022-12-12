@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.files.base import ContentFile
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
 from blog.forms import *
@@ -33,10 +34,11 @@ def post_page(request, post_id):
         profile = user.profile
         comments = Comment.objects.filter(post_id=post)
     return render(request, 'blog/post.html',
-                  {'title': 'Пост#' + str(post_id), 'post': post, 'images': images, 'user': user, 'profile': profile,
+                  {'title': f"{post.title} | {user.username}", 'post': post, 'images': images, 'user': user, 'profile':
+                      profile,
                    'comments': comments, 'comment_form': form})
 
-
+@login_required
 def add_post(request):
     if request.method == 'POST':
         form = AddPostForm(request.POST, request.FILES)
