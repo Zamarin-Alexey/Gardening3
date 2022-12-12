@@ -177,7 +177,7 @@ a {
 
 .posts {
     max-width: 1000px;
-    padding-top: 20px;
+    padding-top: 40px;
 }
 
 .post-container {
@@ -197,6 +197,7 @@ a {
     --bs-gutter-y: 0;
     display: flex;
     flex-wrap: wrap;
+    height: auto;
     margin-top: calc(-1 * var(--bs-gutter-y));
     margin-right: calc(-.5 * var(--bs-gutter-x));
     margin-left: calc(-.5 * var(--bs-gutter-x));

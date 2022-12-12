@@ -17,7 +17,7 @@
     <meta name="description" content="{{ description }}">
     <title>{{ title }}</title>
     <meta name="theme-color" content="#7952b3">
-    <link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'global/css/styles1.css' %}">
     <link rel="shortcut icon" href="{% static 'global/images/logo.png' %}" type="image/png">
 </head>
 
@@ -31,9 +31,7 @@
 
             <div class="d-flex align-items-center">
 
-                <form class="w-50% me-3">
-                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-                </form>
+                {% block search %} {% endblock %}
 
                 {% if request.user.is_authenticated %}
                    {% include 'user_menu.html' %}

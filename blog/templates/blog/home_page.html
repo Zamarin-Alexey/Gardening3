@@ -7,15 +7,13 @@
 
         {% if user.is_authenticated %}
 
-            <a href="{% url 'add_post' %}">
+            <a href="{% url 'add_post' %}" style="float: right">
                 <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Добавить пост</button>
             </a>
 
         {% endif %}
 
         {% if posts %}
-
-
 
             <div class="posts row mb-2">
 
@@ -44,4 +42,13 @@
             <p>Посты отсутствуют</p>
         {% endif %}
     </div>
+
+{% endblock %}
+
+{% block search %}
+
+    <form class="w-50% me-3">
+        <input name="search" type="search" class="form-control" placeholder="Поиск" aria-label="Search">
+    </form>
+
 {% endblock %}

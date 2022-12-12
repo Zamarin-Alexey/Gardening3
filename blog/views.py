@@ -1,13 +1,17 @@
 from django.shortcuts import render, redirect
 from django.core.files.base import ContentFile
+from django.db.models import Q
 
 from blog.forms import *
 from blog.models import *
 
 
 def home_page(request):
-    posts = Post.objects.all()
-
+    search = request.GET.get('search')
+    if search:
+        posts = Post.objects.filter(Q(title__contains=search) | Q(body__contains=search) | Q(tags__contains=search))
+    else:
+        posts = Post.objects.all()
     return render(request, 'blog/home_page.html',
                   {'title': 'Блог', 'posts': posts, 'user': request.user})
 
