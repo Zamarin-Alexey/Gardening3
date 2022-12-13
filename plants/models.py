@@ -22,7 +22,7 @@ class Plant(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('plant', kwargs={'plant_id': self.pk})
+        return reverse('plant_page', kwargs={'plant_id': self.pk})
 
     class Meta:
         verbose_name = 'Растениe'
@@ -43,8 +43,8 @@ class Review(models.Model):
     estimation = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)])
     image = models.ImageField(upload_to='images/')
     tags = models.CharField(max_length=255)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    plant_id = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
 
 
 class UserPlant(models.Model):

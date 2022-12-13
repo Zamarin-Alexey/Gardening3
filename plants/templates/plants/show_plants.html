@@ -1,0 +1,64 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    {# Load the tag library #}
+    {% load django_bootstrap5 %}
+    {% load bootstrap_icons %}
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ description }}">
+    <title>{{ title }}</title>
+    <meta name="theme-color" content="#7952b3">
+    <link rel="shortcut icon" href="{% static 'global/images/logo.png' %}" type="image/png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+{% load static %}
+
+{% block content %}
+    {% if plants %}
+        <section id="gallery">
+          <div class="container">
+            <div class="row">
+
+        {% for plant in plants %}
+            <div class="col-lg-4 mb-4">
+                <div class="card">
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="/media/default_avatar.png" class="d-block w-100" alt="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <img src="" alt="" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ plant.title }}</h5>
+                        <p class="card-text">{{ plant.description }}</p>
+                        <a href="{{ plant.get_absolute_url }}" class="btn btn-outline-success btn-sm">Показать
+                            полностью</a>
+                        <a href="{% url 'add_plant' plant.pk%}" id="add-plant" class="btn btn-outline-danger btn-sm"
+                        >{% bs_icon 'plus' %}</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+            </div>
+          </div>
+        </section>
+    {% else %}
+        <p>Тут пока ничего нет</p>
+    {% endif %}
+{% endblock %}
+
+
+
+

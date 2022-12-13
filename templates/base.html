@@ -50,7 +50,7 @@
         <ul class="nav nav-pills flex-column mb-auto">
             {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                    <a href="#" class="nav-link active" aria-current="page">
+                    <a href="{% url 'my_plant' %}" class="nav-link active" aria-current="page">
                         Мои растения
                     </a>
                 </li>
