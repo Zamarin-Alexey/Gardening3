@@ -13,9 +13,6 @@ $(document).ready(function(){
                 $('#usernameError').remove();
             }
             },
-            /*error: function (response) {
-                console.log(response.responseJSON.errors)
-            }*/
         });
         return false;
     });

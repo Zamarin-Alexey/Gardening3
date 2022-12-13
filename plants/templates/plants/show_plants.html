@@ -19,6 +19,7 @@
     <meta name="theme-color" content="#7952b3">
     <link rel="shortcut icon" href="{% static 'global/images/logo.png' %}" type="image/png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'plants/js/plants_base.js' %}"></script>
 
 {% load static %}
 
@@ -30,7 +31,7 @@
 
         {% for plant in plants %}
             <div class="col-lg-4 mb-4">
-                <div class="card">
+                <div class="card card-plant-{{ plant.pk }}">
                     <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
@@ -45,7 +46,7 @@
                         <p class="card-text">{{ plant.description }}</p>
                         <a href="{{ plant.get_absolute_url }}" class="btn btn-outline-success btn-sm">Показать
                             полностью</a>
-                        <a href="{% url 'add_plant' plant.pk%}" id="add-plant" class="btn btn-outline-danger btn-sm"
+                        <a href="{% url 'add_plant' %}" class="btn btn-outline-danger btn-sm btn-add-plant"
                         >{% bs_icon 'plus' %}</a>
                     </div>
                 </div>

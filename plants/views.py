@@ -18,15 +18,26 @@ def plant_page(request, plant_id=None):
     return render(request, 'plants/plant_page.html', {'title': plant.title, 'plant': plant})
 
 
-def add_plant(request, plant_id=None):
+def add_plant(request):
+    plant_id = request.GET.get('plant_id')
     plant = Plant.objects.get(pk=plant_id)
-    user_plant = UserPlant()
-    user_plant.title = plant.title
-    user_plant.date_finish = plant.period_finish-plant.period_start + datetime.date.today()
-    user_plant.user_id = request.user
-    user_plant.plant_id = plant
-    user_plant.save()
-    return redirect(my_plant)
+    if not UserPlant.objects.filter(plant=plant.pk).exists():
+        user_plant = UserPlant()
+        user_plant.title = plant.title
+        user_plant.date_finish = plant.period_finish-plant.period_start + datetime.date.today()
+        user_plant.user = request.user
+        user_plant.plant = plant
+        user_plant.save()
+        response = {
+            'is_taken': UserPlant.objects.filter(plant=plant.pk, user=request.user.pk).exists(),
+            'message': 'Растение добавлено успешно',
+        }
+    else:
+        response = {
+            'is_taken': True,
+            'message': 'Растение уже добавлено',
+        }
+    return JsonResponse(response)
 
 def my_plant(request):
     plants = UserPlant.objects.filter(user_id=request.user.pk)

@@ -5,7 +5,7 @@
 {% block content %}
     <div class="w-75">
         <div class="post-header">
-            <a class="account-row" href="{% url 'profile_pk' post.user.username %}">
+            <a class="account-row" href="{% url 'profile_form' post.user.pk %}">
                 <div>
                     <img class="rounded-circle account-img-post" src="{{ profile.avatar.url }} "
                          style="cursor: pointer;" alt=""/>

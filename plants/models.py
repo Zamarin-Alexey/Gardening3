@@ -48,8 +48,8 @@ class Review(models.Model):
 
 
 class UserPlant(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, unique=True)
     date_start = models.DateField(auto_now=True)
     date_finish = models.DateField
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    plant_id = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
