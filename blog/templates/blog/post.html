@@ -77,13 +77,14 @@
             {% endfor %}
 
             <hr>
+            {% if request.user.is_authenticated %}
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% bootstrap_form comment_form %}
 
-            <form action="" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% bootstrap_form comment_form %}
-
-                <button class="btn btn-lg btn-success" style="height: fit-content" type="submit">Отправить</button>
-            </form>
+                    <button class="btn btn-lg btn-success" style="height: fit-content" type="submit">Отправить</button>
+                </form>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
