@@ -1,5 +1,5 @@
 import django.http
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
@@ -45,20 +45,13 @@ def user_logout(request):
 
 
 @login_required
-def profile(request, user_name=None):
-    user = get_object_or_404(User, username=user_name)
-
-    user_form = UpdateUserForm(instance=user)
-    profile_form = UpdateProfileForm(instance=user.profile)
-    return render(request, 'users/profile.html', {'title': user.username, 'user': user,
-                                                  'profile': user.profile,
-                                                  'user_form': user_form,
-                                                  'profile_form': profile_form})
-
-
-def edit_profile(request):
+def profile(request, user_id):
+    user = User.objects.get(pk=user_id)
+    is_owner = False
+    if request.user == user:
+        is_owner = True
     if request.method == 'POST':
-        user_form = UpdateUserForm(request.POST, instance=request.user)
+        user_form = UpdateUserForm(request.POST, instance=user)
         profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
 
         if user_form.is_valid() and profile_form.is_valid():
@@ -67,14 +60,15 @@ def edit_profile(request):
             messages.success(request, 'Изменения сохранены')
             return redirect(profile)
     else:
-        user = request.user
         user_form = UpdateUserForm(instance=user)
         profile_form = UpdateProfileForm(instance=user.profile)
-    return render(request, 'users/profile.html', {'title': user.username, 'user': user,
-                                                  'profile': user.profile,
-                                                  'user_form': user_form,
-                                                  'profile_form': profile_form})
-
+    return render(request, 'users/profile.html',
+                  {'title': user.username, 'user': {'username': user.username, 'email': user.email},
+                   'profile': user.profile,
+                   'user_form': user_form,
+                   'profile_form': profile_form,
+                   'is_owner': is_owner
+                   })
 
 
 def validate_username(request):
