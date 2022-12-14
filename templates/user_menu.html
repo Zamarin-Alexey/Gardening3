@@ -1,7 +1,7 @@
 <a href="#" class="nav-link d-flex align-items-center dropdown-toggle" id="dropdownMenuUser"
    data-bs-toggle="dropdown" aria-expanded="false">
     <img src="{{ request.user.profile.avatar.url }}" alt="" width="32" height="32" class="rounded-circle me-2">
-    <strong>{{ request.user.username }}</strong>
+    <strong>{{ request.customuser.username }}</strong>
 </a>
 <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownMenuUser">
     <li><a class="dropdown-item" href="{% url 'profile_pk' request.user.username %}">Личный кабинет</a></li>
