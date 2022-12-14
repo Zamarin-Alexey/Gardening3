@@ -45,34 +45,35 @@ class PlantStage(models.Model):
 
 
 class Review(models.Model):
+    estimation = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)])
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+
     # title = models.CharField(max_length=255)
     # body = models.TextField
-    estimation = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)])
     # image = models.ImageField(upload_to='images/')
     # tags = models.CharField(max_length=255)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
 
 
-class UserPlant(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.title
-
-    def get_absolute_url(self):
-        return reverse('my_plant_page', kwargs={'plant_id': self.pk})
-
-    class Meta:
-        verbose_name = 'Моё растениe'
-        verbose_name_plural = 'Мои растения'
+# class UserPlant(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+#
+#     def __str__(self):
+#         return self.title
+#
+#     def get_absolute_url(self):
+#         return reverse('my_plant_page', kwargs={'plant_id': self.pk})
+#
+#     class Meta:
+#         verbose_name = 'Моё растениe'
+#         verbose_name_plural = 'Мои растения'
 
 
 class UserPlantStage(models.Model):
-    user_plant = models.ForeignKey(UserPlant, on_delete=models.CASCADE)
-    plant_stage=models.ForeignKey(PlantStage, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
     active_stage = models.BooleanField(verbose_name='Текущая стадия', default=False)
-    finished_status = models.BooleanField(verbose_name='Стадия завершена', default=False)
+    finished_status = models.BooleanField(verbose_name='Результат завершенной стадии', default=False)
     reason_failed = models.TextField(verbose_name='Причина неудачи', null=True, blank=True)
 

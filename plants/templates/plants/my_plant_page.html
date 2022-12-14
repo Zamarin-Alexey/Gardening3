@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-    {{ plant.plant.title }}
-    {{ plant.user.username }}
+    {{ plant.title }}
+    {{ request.user.username }}
     {% for stage in stages %}
         <p>{{ stage.active_stage }}</p>
     {% endfor %}
+    {{ stages}}
 {% endblock %}

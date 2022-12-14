@@ -14,4 +14,4 @@ class PlantAdmin(admin.ModelAdmin):
 
 admin.site.register(Plant, PlantAdmin)
 admin.site.register(PlantStage)
-#admin.site.register(UserPlantStage)
+admin.site.register(UserPlantStage)
