@@ -56,3 +56,8 @@ def add_post(request):
     else:
         form = AddPostForm()
     return render(request, 'blog/add_post.html', {'title': 'Добавление поста', 'form': form})
+
+def estimate(request):
+# получить в джекьапри из строки айди поста
+    estimation = PostEstimation.objects.get_or_create(user=request.user, post=post)
+    PostEstimation.create()

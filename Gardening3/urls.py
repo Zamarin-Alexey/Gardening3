@@ -4,6 +4,7 @@ from django.urls import path, include
 
 from Gardening3 import settings
 from users.views import *
+from .views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),

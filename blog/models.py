@@ -39,3 +39,8 @@ class Comment(models.Model):
         verbose_name_plural = 'Комментарии'
         ordering = ['publish_date']
 
+
+class PostEstimation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+

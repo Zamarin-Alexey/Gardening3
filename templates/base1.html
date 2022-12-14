@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+
+    <head>
+        {# Load the tag library #}
+        {% load django_bootstrap5 %}
+        {# Load CSS and JavaScript #}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
+        {# Load static files#}
+        {% load static %}
+        {# Meta information #}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="{{ description }}">
+
+        <link rel="shortcut icon" href="{% static 'global/images/logo.png' %}" type="image/png">
+
+        <title>{{ title }}</title>
+    </head>
+    {% include header.html %}
+    <body>
+      {% include navbar.html %}
+
+      {{ content }}
+
+      {% include footer.html %}
+
+      {% include scripts.html %}
+
+      {% include google-analytics.html %}
+    </body>
+</html>

@@ -8,8 +8,10 @@ class PhotoPlantInline(admin.TabularInline):
 
 class PlantAdmin(admin.ModelAdmin):
     inlines = [
-        PhotoPlantInline,
+        PhotoPlantInline
     ]
 
 
 admin.site.register(Plant, PlantAdmin)
+admin.site.register(PlantStage)
+#admin.site.register(UserPlantStage)
