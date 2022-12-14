@@ -4,70 +4,80 @@
 
 {% block content %}
     <div class="w-75">
-        <div class="post-header">
-            <a class="account-row" href="{% url 'profile_form' post.user.pk %}">
-                <div>
-                    <img class="rounded-circle account-img-post" src="{{ profile.avatar.url }} "
-                         style="cursor: pointer;" alt=""/>
-                </div>
-                <div style="padding: 5px; align-items: center">{{ user.username }}</div>
-            </a>
-        </div>
-
-        <div class="post-body  border rounded">
-            <h1 class="title">{{ post.title }}</h1>
-            <div class="">
-                {% if images %}
-                    <div id="carouselExampleIndicators" class="carousel slide image_carousel w-50"
-                         data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            {% for image in images %}
-                                <div class="carousel-item active">
-                                    <img src="{{ image.image.url }}" class="d-block rounded carousel_image" alt="...">
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                                data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Предыдущий</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                                data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Следующий</span>
-                        </button>
+        <div class="post">
+            <div class="post-header" style="display: flex">
+                <a class="account-row" href="{% url 'profile_form' post.user.pk %}">
+                    <div>
+                        <img class="rounded-circle account-img-post" src="{{ profile.avatar.url }} "
+                             style="cursor: pointer;" alt=""/>
                     </div>
-
-                {% endif %}
-
-                <div style="padding-top: 15px">
-                    {{ post.body|safe }}
-                </div>
-
-
+                    <div style="padding: 5px; align-items: center">{{ user.username }}</div>
+                </a>
+                <a href="{% url 'edit_post' post.pk %}" style="float: right">
+                    <button type="button" class="btn btn-success h-btn"
+                            style="margin-left: auto; height: 40px; width: 200px;">Редактировать пост
+                    </button>
+                </a>
             </div>
 
-        </div>
-        <div class="post-footer">
-            <div>Теги: {{ post.tags }}</div>
-            <div style="margin-left: auto">Дата публикации: {{ post.publish_date }}</div>
+            <div class="post-body  border rounded">
+                <h1 class="title">{{ post.title }}</h1>
+                <div class="">
+                    {% if images %}
+                        <div id="carouselExampleIndicators" class="carousel slide image_carousel w-50"
+                             data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for image in images %}
+                                    <div class="carousel-item active">
+                                        <img src="{{ image.image.url }}" class="d-block rounded carousel_image"
+                                             alt="...">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#carouselExampleIndicators"
+                                    data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Предыдущий</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                    data-bs-target="#carouselExampleIndicators"
+                                    data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Следующий</span>
+                            </button>
+                        </div>
+
+                    {% endif %}
+
+                    <div style="padding-top: 15px">
+                        {{ post.body|safe }}
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="post-footer">
+                <div>Теги: {{ post.tags }}</div>
+                <div style="margin-left: auto">Дата публикации: {{ post.publish_date }}</div>
+            </div>
         </div>
         <hr>
         <div class="comments">
             Комментарии
             {% for comment in comments %}
                 <div class="comment border rounded">
-                    <a class="account-row" href="{% url 'profile_form' post.user.pk %}">
+                    <a class="account-row" href="{% url 'profile_form' comment.user.pk %}">
                         <div>
-                            <img class="rounded-circle account-img-post" src="{{ comment.user_id.profile.avatar.url }} "
+                            <img class="rounded-circle account-img-post" src="{{ comment.user.profile.avatar.url }} "
                                  style="cursor: pointer;" alt=""/>
                         </div>
-                        <div style="padding: 5px; align-items: center">{{ comment.user_id.username }}</div>
+                        <div style="padding: 5px; align-items: center">{{ comment.user.username }}</div>
                     </a>
-                    <div>
+                    <div style="display: table-header-group">
                         {% if comment.image %}
-                            <img src="{{ comment.image.url }}" class="d-block rounded comment-image" alt="...">
+                            <img src="{{ comment.image.url }}" class="rounded comment-image" alt="...">
                         {% endif %}
                         {% if comment.body %}
                             {{ comment.body }}

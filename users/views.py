@@ -47,9 +47,9 @@ def user_logout(request):
 @login_required
 def profile(request, user_id):
     user = User.objects.get(pk=user_id)
-    is_owner = False
-    if request.user == user:
-        is_owner = True
+
+    is_owner = (request.user == user)
+
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=user)
         profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)

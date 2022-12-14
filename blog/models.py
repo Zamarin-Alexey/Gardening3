@@ -9,7 +9,6 @@ class Post(models.Model):
     tags = models.CharField(blank=True, max_length=255, verbose_name='Теги')
     publish_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
-
     def __str__(self):
         return self.title
 
@@ -31,8 +30,8 @@ class Comment(models.Model):
     body = models.TextField(blank=True, verbose_name='Текст комментария')
     image = models.ImageField(blank=True, upload_to='images/', verbose_name='Изображение')
     publish_date = models.DateTimeField(auto_now_add=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Комментарий'

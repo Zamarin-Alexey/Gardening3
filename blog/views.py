@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.core.files.base import ContentFile
 from django.contrib.auth.decorators import login_required
@@ -23,8 +24,8 @@ def post_page(request, post_id):
         form = AddCommentForm(request.POST, request.FILES)
         if form.is_valid():
             form = form.save(commit=False)
-            form.user_id = request.user
-            form.post_id = post
+            form.user = request.user
+            form.post = post
             form.save()
             return redirect(post)
     else:
@@ -38,15 +39,15 @@ def post_page(request, post_id):
                       profile,
                    'comments': comments, 'comment_form': form})
 
+
 @login_required
 def add_post(request):
     if request.method == 'POST':
-        form = AddPostForm(request.POST, request.FILES)
+        form = PostForm(request.POST)
         if form.is_valid():
-            post = Post.objects.create(title=form.cleaned_data['title'],
-                                       body=form.cleaned_data['body'].replace('\n', '<br />'),
-                                       tags=form.cleaned_data['tags'],
-                                       user=request.user)
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
             for f in request.FILES.getlist('images'):
                 data = f.read()
                 image = Image(post=post)
@@ -54,10 +55,36 @@ def add_post(request):
                 image.save()
             return redirect(post)
     else:
-        form = AddPostForm()
-    return render(request, 'blog/add_post.html', {'title': 'Добавление поста', 'form': form})
+        form = PostForm()
+    return render(request, 'blog/add_post.html',
+                  {'title': 'Добавление поста', 'form': form})
 
+
+def edit_post(request, post_id):
+    post = Post.objects.get(pk=post_id)
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            for f in request.FILES.getlist('images'):
+                data = f.read()
+                image = Image(post=post)
+                image.image.save(f.name, ContentFile(data))
+                image.save()
+            messages.success(request, 'Изменения сохранены')
+            return redirect(post)
+    else:
+        form = PostForm()
+    return render(request, 'blog/edit_post.html', {'title': 'Редактирование поста', 'form': form, 'post': post})
+
+def delete_post(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    post.delete()
+    return redirect('/')
 def estimate(request):
-# получить в джекьапри из строки айди поста
+    # получить в джекьапри из строки айди поста
     estimation = PostEstimation.objects.get_or_create(user=request.user, post=post)
     PostEstimation.create()

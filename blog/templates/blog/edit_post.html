@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block content %}
+    <div class="w-75 m-auto form-post">
+        <a href="{% url 'delete_post' post.pk %}" style="float: right">
+            <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Удалить</button>
+        </a>
+        <form method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            {% bootstrap_form form %}
+
+            <button class="w-100 btn btn-lg btn-success" type="submit">Сохранить</button>
+        </form>
+    </div>
+{% endblock %}
