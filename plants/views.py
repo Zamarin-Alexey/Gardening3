@@ -27,7 +27,7 @@ def add_plant(request):
     user = User.objects.get(pk=request.user.id)
     try:
         user = user.extenduser.plants.get(pk=plant_id)
-        messages.error(request, "Растение уже добавлено")
+        message = "Растение уже добавлено"
     except Plant.DoesNotExist:
         plant = Plant.objects.get(pk=plant_id)
         user.profile.plants.add(plant)

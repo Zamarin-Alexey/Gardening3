@@ -30,7 +30,7 @@ function plantAdd(plant_id){
                 success: function (response) {
                     console.log(response)
                     if (response.is_taken == true) {
-                        console.log(response.messages.serialize())
+                        console.log(response.mes)
                     } else {
                         alert('Упс, произошла ошибка. Попробуйте позже')
                     }
