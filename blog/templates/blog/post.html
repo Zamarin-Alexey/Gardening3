@@ -14,17 +14,18 @@
                     <div style="padding: 5px; align-items: center">{{ user.username }}</div>
                 </a>
                 <div class="likes">Оценили {{ post.likes }} пользователей</div>
-                {% if user == post.user %}
                 <a href="{% url 'like_post' post.pk request.user.pk %}" style="float: right; margin-left: auto">
                     <button type="button" class="btn btn-success h-btn"
                             style="margin-left: auto; height: 40px; width: 200px;">Мне нравится
                     </button>
                 </a>
-                <a href="{% url 'edit_post' post.pk %}" style="float: right; margin-left: auto">
-                    <button type="button" class="btn btn-success h-btn"
-                            style="margin-left: auto; height: 40px; width: 200px;">Редактировать пост
-                    </button>
-                </a>
+                {% if user == request.user %}
+
+                    <a href="{% url 'edit_post' post.pk %}" style="float: right; margin-left: auto">
+                        <button type="button" class="btn btn-success h-btn"
+                                style="margin-left: auto; height: 40px; width: 200px;">Редактировать пост
+                        </button>
+                    </a>
                 {% endif %}
             </div>
 

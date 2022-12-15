@@ -3,6 +3,37 @@
 
 {% block content %}
 
+    <div class="category-sidebar">
+
+        {% if category == 'popular' %}
+            <a>
+                <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Популярные</button>
+            </a>
+        {% else %}
+            <a href="{% url 'category' 'popular' %}">
+                <button type="button" class="btn btn-light h-btn" style="margin-left: auto">Популярные</button>
+            </a>
+        {% endif %}
+        {% if category == 'my' %}
+            <a>
+                <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Мои</button>
+            </a>
+        {% else %}
+            <a href="{% url 'category' 'my' %}">
+                <button type="button" class="btn btn-light h-btn" style="margin-left: auto">Мои</button>
+            </a>
+        {% endif %}
+        {% if category == 'all' %}
+            <a>
+                <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Все</button>
+            </a>
+        {% else %}
+            <a href="{% url 'category' 'all' %}">
+                <button type="button" class="btn btn-light h-btn" style="margin-left: auto">Все</button>
+            </a>
+        {% endif %}
+    </div>
+
     <div class="width-organizer">
 
         {% if user.is_authenticated %}
@@ -39,7 +70,7 @@
 
             </div>
         {% else %}
-            <p>Посты отсутствуют</p>
+            <p style="margin-top: 20px; font-size: large">Посты отсутствуют</p>
         {% endif %}
     </div>
 

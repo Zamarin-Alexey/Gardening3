@@ -9,14 +9,22 @@ from blog.models import *
 from users.models import *
 
 
-def home_page(request):
+def home_page(request, category='popular'):
     search = request.GET.get('search')
     if search:
-        posts = Post.objects.filter(Q(title__contains=search) | Q(body__contains=search) | Q(tags__contains=search))
+        founded_posts = Post.objects.filter(
+            Q(title__contains=search) | Q(body__contains=search) | Q(tags__contains=search))
     else:
-        posts = Post.objects.all()
+        founded_posts = Post.objects.all()
+    if category == 'popular':
+        posts = founded_posts.order_by('-likes')[:5]
+    elif category == 'my':
+        posts = founded_posts.filter(user=request.user)
+    else:
+        posts = founded_posts
+
     return render(request, 'blog/home_page.html',
-                  {'title': 'Блог', 'posts': posts, 'user': request.user})
+                  {'title': 'Блог', 'posts': posts, 'user': request.user, 'category': category})
 
 
 def post_page(request, post_id):
@@ -81,10 +89,13 @@ def edit_post(request, post_id):
         form = PostForm(instance=post)
     return render(request, 'blog/edit_post.html', {'title': 'Редактирование поста', 'form': form, 'post': post})
 
+
 def delete_post(request, post_id):
     post = Post.objects.get(pk=post_id)
     post.delete()
     return redirect('/')
+
+
 def like_post(request, post_id, user_id):
     post = Post.objects.get(pk=post_id)
     extend_user = ExtendUser.objects.get(user=User.objects.get(pk=user_id))

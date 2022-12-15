@@ -326,3 +326,8 @@ body div::selection {
     float: left;
     margin-right: 15px;
 }
+
+.category-sidebar {
+    display: flex;
+    padding-top: 20px;
+}
