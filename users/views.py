@@ -1,6 +1,4 @@
-import django.http
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -68,27 +66,23 @@ def profile(request, user_id):
                    'profile': user.profile,
                    'user_form': user_form,
                    'profile_form': profile_form,
-                   'is_owner': is_owner
+                   'is_owner': is_owner,
+                   'user_id': user_id
                    })
 
 
-def user_delete(request, user_id):
-    try:
-        user = User.objects.get(pk=user_id)
-        user.delete()
-        messages.success(request, "Вы удалили свой аккаунт")
-    except User.DoesNotExist:
-        messages.error(request, "Пользователь не найден")
-        return render(request, 'blog/home_page.html')
-    except Exception as e:
-        messages.error(request, "Упс! Произошла ошибка. Повторите позже")
-        return render(request, 'blog/home_page.html', {'err': e.message})
-
+@login_required
+def delete_user(request, user_id):
+    user = User.objects.get(pk=user_id)
+    user.delete()
+    messages.success(request, "Вы удалили свой аккаунт")
+    user_logout(request)
     return render(request, 'blog/home_page.html')
 
 
 def user_follow(request):
     pass
+
 
 def validate_username(request):
     username = request.GET.get('username')
@@ -96,10 +90,3 @@ def validate_username(request):
         'is_taken': User.objects.filter(username__iexact=username).exists()
     }
     return JsonResponse(response)
-
-
-@login_required
-def delete_user(request, user_id):
-    user = User.objects.get(pk=user_id)
-    user.delete()
-    return redirect('/')

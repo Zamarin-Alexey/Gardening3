@@ -77,7 +77,7 @@ def edit_post(request, post_id):
             messages.success(request, 'Изменения сохранены')
             return redirect(post)
     else:
-        form = PostForm()
+        form = PostForm(instance=post)
     return render(request, 'blog/edit_post.html', {'title': 'Редактирование поста', 'form': form, 'post': post})
 
 def delete_post(request, post_id):

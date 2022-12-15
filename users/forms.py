@@ -33,7 +33,6 @@ class UpdateProfileForm(forms.ModelForm):
     bio = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}),
                           label='О себе')
 
-    # widget=forms.
     class Meta:
         model = Profile
         fields = ['avatar', 'bio']
