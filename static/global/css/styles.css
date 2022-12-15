@@ -269,9 +269,22 @@ body div::selection {
 
 .account-row {
     display: flex;
-    width: 100%;
     align-items: center;
     margin-bottom: 10px;
+    margin-right: 30px;
+}
+
+.likes {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.like_btn {
+    float: right;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .title {

@@ -6,6 +6,7 @@ from django.db.models import Q
 
 from blog.forms import *
 from blog.models import *
+from users.models import *
 
 
 def home_page(request):
@@ -84,7 +85,16 @@ def delete_post(request, post_id):
     post = Post.objects.get(pk=post_id)
     post.delete()
     return redirect('/')
-def estimate(request):
-    # получить в джекьапри из строки айди поста
-    estimation = PostEstimation.objects.get_or_create(user=request.user, post=post)
-    PostEstimation.create()
+def like_post(request, post_id, user_id):
+    post = Post.objects.get(pk=post_id)
+    extend_user = ExtendUser.objects.get(user=User.objects.get(pk=user_id))
+    like_exist = extend_user.liked_posts.filter(pk=post.pk)
+    if not like_exist:
+        post.likes += 1
+        extend_user.liked_posts.add(post)
+    else:
+        post.likes -= 1
+        extend_user.liked_posts.remove(post)
+    post.save()
+    extend_user.save()
+    return redirect(post)

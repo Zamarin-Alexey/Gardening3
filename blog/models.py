@@ -9,6 +9,7 @@ class Post(models.Model):
     tags = models.CharField(blank=True, max_length=255, verbose_name='Теги')
     publish_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    likes = models.IntegerField(blank=True, default=0)
     def __str__(self):
         return self.title
 
@@ -37,9 +38,3 @@ class Comment(models.Model):
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
         ordering = ['publish_date']
-
-
-class PostEstimation(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-
