@@ -3,20 +3,34 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
 from django.urls import reverse
-import datetime
 
 
 def plant_directory_path(instance, filename):
     return f'images/flowers/plant#{instance.plant.id}/{filename}'
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=255, unique=True, verbose_name='Название категории')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+        ordering = ['title']
+
+
 class Plant(models.Model):
-    title = models.CharField(max_length=255, verbose_name='Название')
-    description = models.TextField(verbose_name='Описание')
-    conditions = models.TextField(verbose_name='Условия')
-    period_start = models.DateField(default=datetime.date.today(), verbose_name='Начало посадки')
-    period_finish = models.DateField(default=datetime.date.today(), verbose_name='Конец посадки')
+    title = models.CharField(max_length=255, verbose_name='Название растения')
+    description = models.TextField(verbose_name='Описание растения')
+    conditions = models.TextField(verbose_name='Условия ухода')
+    planting = models.CharField(max_length=255, verbose_name='Период посадки')
+    stages = models.TextField(verbose_name='Стадии роста')
+    reproduction = models.TextField(verbose_name='Размножение и рассадка')
     tags = models.CharField(max_length=255, blank=True)
+    category = models.ForeignKey(Category, related_name='Категория', null=True, on_delete=models.SET_NULL)
+    # family = models.ForeignKey(Family, related_name='Семейство', null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.title
@@ -30,50 +44,33 @@ class Plant(models.Model):
         ordering = ['title']
 
 
-class PhotoPlant(models.Model):
+class ImagePlant(models.Model):
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=plant_directory_path, verbose_name='Фотографии')
+
     class Meta:
         verbose_name = 'Фотография'
         verbose_name_plural = 'Фотографии'
 
-class PlantStage(models.Model):
-    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
-    title_stage = models.CharField(max_length=255, verbose_name='Название стадии')
-    description_stage = models.TextField(verbose_name='Описание стадии')
-    number_stage = models.PositiveSmallIntegerField(verbose_name='Номер стадии')
-
 
 class Review(models.Model):
+    title = models.CharField(max_length=255)
+    body = models.TextField
     estimation = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)])
+    published_date = models.DateField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    readers = models.ManyToManyField(User, related_name='reviews')
 
-    # title = models.CharField(max_length=255)
-    # body = models.TextField
-    # image = models.ImageField(upload_to='images/')
-    # tags = models.CharField(max_length=255)
+    def __str__(self):
+        return self.title
 
+    def get_absolute_url(self):
+        return reverse('review', kwargs={'review_id': self.pk})
 
-# class UserPlant(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
-#
-#     def __str__(self):
-#         return self.title
-#
-#     def get_absolute_url(self):
-#         return reverse('my_plant_page', kwargs={'plant_id': self.pk})
-#
-#     class Meta:
-#         verbose_name = 'Моё растениe'
-#         verbose_name_plural = 'Мои растения'
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
+        ordering = ['title']
 
-
-class UserPlantStage(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
-    active_stage = models.BooleanField(verbose_name='Текущая стадия', default=False)
-    finished_status = models.BooleanField(verbose_name='Результат завершенной стадии', default=False)
-    reason_failed = models.TextField(verbose_name='Причина неудачи', null=True, blank=True)
 

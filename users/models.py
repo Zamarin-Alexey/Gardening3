@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from plants.models import Plant
+from plants.models import Plant, Review
 from blog.models import Post
 
 
@@ -25,6 +25,11 @@ class Profile(models.Model):
         verbose_name = 'Профиль'
         verbose_name_plural = 'Учётные записи'
 
+
+class ExtendUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    plants = models.ManyToManyField(Plant)
+    posts = models.ManyToManyField(Post)
 
 # class UserFollowing(models.Model):
 #     user_id = models.ForeignKey("User", related_name="following", on_delete=models.CASCADE)

@@ -1,4 +1,4 @@
-$(document).ready(function(){
+
     console.log('ok')
     //  $('.btn-add-plant').click(function () {
     //     let id = $(this).parents('.card').attr('class').match(/\d+/)
@@ -28,8 +28,9 @@ function plantAdd(plant_id){
                 data: {'plant_id': plant_id},
                 url: 'add_plant/',
                 success: function (response) {
+                    console.log(response)
                     if (response.is_taken == true) {
-                        alert(response.message)
+                        console.log(response.messages.serialize())
                     } else {
                         alert('Упс, произошла ошибка. Попробуйте позже')
                     }
@@ -54,5 +55,3 @@ function plantAdd(plant_id){
     //     });
     //     return false;
     // });
-
-   });

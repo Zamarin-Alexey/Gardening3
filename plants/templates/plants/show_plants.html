@@ -46,7 +46,7 @@
                         <p class="card-text">{{ plant.description }}</p>
                         <a href="{{ plant.get_absolute_url }}" class="btn btn-outline-success btn-sm">Показать
                             полностью</a>
-                        <a href="{% url 'add_plant' %}" class="btn btn-outline-danger btn-sm btn-add-plant"
+                        <a href="#" class="btn btn-outline-danger btn-sm btn-add-plant"
                            onclick="plantAdd({{ plant.pk }})"
                         >{% bs_icon 'plus' %}</a>
                     </div>

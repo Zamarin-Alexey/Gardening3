@@ -7,5 +7,5 @@ urlpatterns = [
     path('plant/<int:plant_id>', plant_page, name='plant_page'),
     path('add_plant/', add_plant, name='add_plant'),
     #path('my_plant/', my_plant, name='my_plant'),
-    path('my_plant/<int:plant_id>', my_plant_page, name='my_plant_page'),
+    # path('my_plant/<int:plant_id>', my_plant_page, name='my_plant_page'),
 ]

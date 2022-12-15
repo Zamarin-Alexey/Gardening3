@@ -2,16 +2,15 @@ from django.contrib import admin
 from .models import *
 
 
-class PhotoPlantInline(admin.TabularInline):
-    model = PhotoPlant
+class ImagePlantInline(admin.TabularInline):
+    model = ImagePlant
 
 
 class PlantAdmin(admin.ModelAdmin):
     inlines = [
-        PhotoPlantInline
+        ImagePlantInline
     ]
 
 
 admin.site.register(Plant, PlantAdmin)
-admin.site.register(PlantStage)
-admin.site.register(UserPlantStage)
+
