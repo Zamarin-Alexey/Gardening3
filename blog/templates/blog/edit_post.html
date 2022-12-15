@@ -6,7 +6,7 @@
 {% block content %}
     <div class="w-75 m-auto form-post">
         <a href="{% url 'delete_post' post.pk %}" style="float: right">
-            <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Удалить</button>
+            <button type="button" class="btn btn-success h-btn" style="margin-left: auto">РЈРґР°Р»РёС‚СЊ</button>
         </a>
         <form method="POST" enctype="multipart/form-data">
 
@@ -14,7 +14,7 @@
 
             {% bootstrap_form form %}
 
-            <button class="w-100 btn btn-lg btn-success" type="submit">Сохранить</button>
+            <button class="w-100 btn btn-lg btn-success" type="submit">РЎРѕС…СЂР°РЅРёС‚СЊ</button>
         </form>
     </div>
 {% endblock %}

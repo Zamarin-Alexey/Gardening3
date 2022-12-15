@@ -44,7 +44,6 @@ def user_logout(request):
     return redirect('/')
 
 
-@login_required
 def profile(request, user_id):
     user = User.objects.get(pk=user_id)
 
@@ -77,3 +76,10 @@ def validate_username(request):
         'is_taken': User.objects.filter(username__iexact=username).exists()
     }
     return JsonResponse(response)
+
+
+@login_required
+def delete_user(request, user_id):
+    user = User.objects.get(pk=user_id)
+    user.delete()
+    return redirect('/')

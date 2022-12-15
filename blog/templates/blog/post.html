@@ -13,11 +13,13 @@
                     </div>
                     <div style="padding: 5px; align-items: center">{{ user.username }}</div>
                 </a>
+                {% if user == post.user %}
                 <a href="{% url 'edit_post' post.pk %}" style="float: right">
                     <button type="button" class="btn btn-success h-btn"
                             style="margin-left: auto; height: 40px; width: 200px;">Редактировать пост
                     </button>
                 </a>
+                {% endif %}
             </div>
 
             <div class="post-body  border rounded">
