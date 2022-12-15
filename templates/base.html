@@ -59,20 +59,20 @@
 </header>
 
 
-<div class="sidebar w3-bar-block card animate-left" style="display:none" id="mySidebar">
-    <ul class="nav nav-pills flex-column mb-auto">
-        {% if request.user.is_authenticated %}
-            <li class="nav-item">
-                <a href="{% url 'my_plant' %}" class="nav-link active" aria-current="page">
-                    Мои растения
+    <div class="sidebar w3-bar-block card animate-left" style="display:none" id="mySidebar">
+        <ul class="nav nav-pills flex-column mb-auto">
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="{% url 'plants' 'my-plant' %}" class="nav-link active" aria-current="page">
+                        Мои растения
+                    </a>
+                </li>
+            {% endif %}
+            <li>
+                <a href="{% url 'blog_home' %}" class="nav-link link-dark">
+                    Блог
                 </a>
             </li>
-        {% endif %}
-        <li>
-            <a href="{% url 'blog_home' %}" class="nav-link link-dark">
-                Блог
-            </a>
-        </li>
 
         <li>
             <a href="#" class="nav-link link-dark">
@@ -80,14 +80,14 @@
             </a>
         </li>
 
-        <li>
-            <a href="{% url 'plants' %}" class="nav-link link-dark">
-                Библиотека растений
-            </a>
-        </li>
-    </ul>
-    <hr>
-</div>
+            <li>
+                <a href="{% url 'plants' 'all' %}" class="nav-link link-dark">
+                    Библиотека растений
+                </a>
+            </li>
+        </ul>
+        <hr>
+    </div>
 
 <div id="main">
     <main>

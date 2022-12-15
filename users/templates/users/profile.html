@@ -1,7 +1,7 @@
 {% extends 'users/users_base.html' %}
 {% load static %}
 {% load django_bootstrap5 %}
-
+    {% load bootstrap_icons %}
 
 {% block content %}
     <section class="h-100 gradient-custom-2">
@@ -15,24 +15,36 @@
                                 <img src="{{ profile.avatar.url }}"
                                      alt="Фотография" class="img-fluid img-thumbnail mt-4 mb-2"
                                      style="width: 150px; z-index: 1">
-                                {% if is_owner %}
-                                    <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
-                                            id="button-edit-user-profile" style="z-index: 1;">
-                                        Редактировать профиль
-                                    </button>
-                                {% endif %}
                             </div>
                             <div class="ms-3 align-items-center" style="margin-top: 130px;">
                                 <h5> {{ user.username }}</h5>
                                 <p> {{ profile.bio }}</p>
                             </div>
+
+                            {% if is_owner %}
+                            <div class="dropdown ms-4 mt-5 d-flex flex-column ">
+                                <a class="text-decoration-none" href="#" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    ntrcn{% bs_icon 'gear' %}
+                                </a>
+
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Редактирование профиля</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Удалить профиль</a></li>
+                                </ul>
+                            </div>
+                            {% endif %}
+
                         </div>
                         <div class="p-4 text-black" style="background-color: #f8f9fa;">
                             <div class="d-flex justify-content-end text-center py-1">
+                                {% if user.plants %}
                                 <div>
-                                    <p class="mb-1 h5">253</p>
-                                    <p class="small text-muted mb-0">Фото</p>
+                                    <p class="mb-1 h5">{{ user.plants.count }}</p>
+                                    <p class="small text-muted mb-0">Растения</p>
                                 </div>
+                                    <!--
                                 <div class="px-3">
                                     <p class="mb-1 h5">1026</p>
                                     <p class="small text-muted mb-0">Подписчики</p>
@@ -41,6 +53,8 @@
                                     <p class="mb-1 h5">478</p>
                                     <p class="small text-muted mb-0">Подписки</p>
                                 </div>
+                                -->
+                                {% endif %}
                             </div>
                         </div>
                         {#            #}
@@ -51,9 +65,10 @@
                         {% endif %}
                         <div class="card-body p-4 text-black">
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <p class="lead fw-normal mb-0">Фото</p>
-                                <p class="mb-0"><a href="#!" class="text-muted">Показать все</a></p>
+                                <p class="lead fw-normal mb-0">Растения</p>
+                                <p class="mb-0"><a href="#" class="text-muted">Показать все</a></p>
                             </div>
+                            <!--
                             <div class="row g-2">
                                 <div class="col mb-2">
                                     <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
@@ -74,6 +89,7 @@
                                          alt="image 1" class="w-100 rounded-3">
                                 </div>
                             </div>
+                            -->
                         </div>
                     </div>
                 </div>

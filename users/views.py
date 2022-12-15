@@ -7,7 +7,6 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
 
-from .forms import UpdateUserForm, UpdateProfileForm
 from .forms import *
 
 
@@ -57,7 +56,10 @@ def profile(request, user_id):
             user_form.save()
             profile_form.save()
             messages.success(request, 'Изменения сохранены')
-            return redirect(profile)
+            # return redirect(profile)
+        else:
+            messages.error(request, 'Произошла ошибка')
+            # return redirect(profile)
     else:
         user_form = UpdateUserForm(instance=user)
         profile_form = UpdateProfileForm(instance=user.profile)
@@ -69,6 +71,24 @@ def profile(request, user_id):
                    'is_owner': is_owner
                    })
 
+
+def user_delete(request, user_id):
+    try:
+        user = User.objects.get(pk=user_id)
+        user.delete()
+        messages.success(request, "Вы удалили свой аккаунт")
+    except User.DoesNotExist:
+        messages.error(request, "Пользователь не найден")
+        return render(request, 'blog/home_page.html')
+    except Exception as e:
+        messages.error(request, "Упс! Произошла ошибка. Повторите позже")
+        return render(request, 'blog/home_page.html', {'err': e.message})
+
+    return render(request, 'blog/home_page.html')
+
+
+def user_follow(request):
+    pass
 
 def validate_username(request):
     username = request.GET.get('username')

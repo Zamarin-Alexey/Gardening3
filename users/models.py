@@ -24,3 +24,8 @@ class Profile(models.Model):
     class Meta:
         verbose_name = 'Профиль'
         verbose_name_plural = 'Учётные записи'
+
+
+# class UserFollowing(models.Model):
+#     user_id = models.ForeignKey("User", related_name="following", on_delete=models.CASCADE)
+#     following_user_id = models.ForeignKey("User", related_name="followers", on_delete=models.CASCADE)
