@@ -24,6 +24,9 @@
 {% load static %}
 
 {% block content %}
+    {% for plant in request.user.extenduser.plants.all %}
+    {{ request.user.extenduser.plants.title }}
+    {% endfor %}
     {% if plants %}
         <section id="gallery">
           <div class="container">
@@ -49,7 +52,7 @@
                         <a href="#" class="btn btn-outline-danger btn-sm btn-add-plant"
                            onclick="plantAdd({{ plant.pk }})"
                         >{% bs_icon 'plus' %}</a>
-                    </div>
+
                 </div>
             </div>
         {% endfor %}

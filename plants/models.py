@@ -29,6 +29,7 @@ class Plant(models.Model):
     stages = models.TextField(verbose_name='Стадии роста')
     reproduction = models.TextField(verbose_name='Размножение и рассадка')
     tags = models.CharField(max_length=255, blank=True)
+    rating = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], default=0, blank=True)
     category = models.ForeignKey(Category, related_name='Категория', null=True, on_delete=models.SET_NULL)
     # family = models.ForeignKey(Family, related_name='Семейство', null=True, on_delete=models.SET_NULL)
 
@@ -41,7 +42,7 @@ class Plant(models.Model):
     class Meta:
         verbose_name = 'Растениe'
         verbose_name_plural = 'Растения'
-        ordering = ['title']
+        ordering = ['rating']
 
 
 class ImagePlant(models.Model):
@@ -60,7 +61,7 @@ class Review(models.Model):
     published_date = models.DateField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
-    readers = models.ManyToManyField(User, related_name='reviews')
+    readers = models.ManyToManyField(User, related_name='reviews', blank=True)
 
     def __str__(self):
         return self.title
@@ -72,5 +73,6 @@ class Review(models.Model):
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
         ordering = ['title']
+        unique_together = ('user', 'plant')
 
 
