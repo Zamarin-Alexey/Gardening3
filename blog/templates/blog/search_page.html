@@ -5,38 +5,34 @@
 
     <div class="category-sidebar">
 
-        {% if category == 'popular' %}
+        {% if category == 'posts' %}
             <a>
-                <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Популярные</button>
+                <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Посты</button>
             </a>
         {% else %}
-            <a href="{% url 'category' 'popular' search %}">
-                <button type="button" class="btn btn-light h-btn" style="margin-left: auto">Популярные</button>
+            <a href="{% url 'search_page' 'posts' search %}">
+                <button type="button" class="btn btn-light h-btn" style="margin-left: auto">Посты</button>
             </a>
         {% endif %}
-        {% if category == 'my' %}
+        {% if category == 'plants' %}
             <a>
-                <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Мои</button>
+                <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Растения</button>
             </a>
         {% else %}
-            <a href="{% url 'category' 'my' search %}">
-                <button type="button" class="btn btn-light h-btn" style="margin-left: auto">Мои</button>
+            <a href="{% url 'search_page' 'plants' search %}">
+                <button type="button" class="btn btn-light h-btn" style="margin-left: auto">Растения</button>
             </a>
         {% endif %}
-        {% if category == 'all' %}
+        {% if category == 'users' %}
             <a>
-                <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Все</button>
+                <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Пользователи</button>
             </a>
         {% else %}
-            <a href="{% url 'category' 'all' search %}">
-                <button type="button" class="btn btn-light h-btn" style="margin-left: auto">Все</button>
+            <a href="{% url 'search_page' 'users' search %}">
+                <button type="button" class="btn btn-light h-btn" style="margin-left: auto">Пользователи</button>
             </a>
         {% endif %}
 
-        <form class="me-3" style="margin-left: 20px">
-            <input name="search" type="search" class="form-control" placeholder="Найти пост" aria-label="Search"
-                   value={% if not search %} '' {% else %} {{ search }} {% endif %}>
-        </form>
     </div>
 
     <div class="width-organizer">

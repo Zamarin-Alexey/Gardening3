@@ -9,9 +9,13 @@ from blog.models import *
 from users.models import *
 
 
-def home_page(request, category='popular'):
+def home_page(request, category='popular', prev_search=None):
     search = request.GET.get('search')
     if search:
+        founded_posts = Post.objects.filter(
+            Q(title__contains=search) | Q(body__contains=search) | Q(tags__contains=search))
+    elif prev_search:
+        search = prev_search
         founded_posts = Post.objects.filter(
             Q(title__contains=search) | Q(body__contains=search) | Q(tags__contains=search))
     else:
@@ -24,7 +28,7 @@ def home_page(request, category='popular'):
         posts = founded_posts
 
     return render(request, 'blog/home_page.html',
-                  {'title': 'Блог', 'posts': posts, 'user': request.user, 'category': category})
+                  {'title': 'Блог', 'posts': posts, 'user': request.user, 'category': category, 'search': search})
 
 
 def post_page(request, post_id):
@@ -109,3 +113,25 @@ def like_post(request, post_id, user_id):
     post.save()
     extend_user.save()
     return redirect(post)
+
+
+def global_search(request, category='popular', prev_search=None):
+    search = request.GET.get('global_search')
+    if not search:
+        search = prev_search
+
+    posts, users, plants = None, None, None
+
+    if category == 'posts':
+        posts = Post.objects.filter(
+            Q(title__contains=search) | Q(body__contains=search) | Q(tags__contains=search))
+    elif category == 'plants':
+        plants = Post.objects.filter(
+            Q(title__contains=search) | Q(body__contains=search) | Q(tags__contains=search))
+    else:
+        users = Post.objects.filter(
+            Q(title__contains=search) | Q(body__contains=search) | Q(tags__contains=search))
+
+    return render(request, 'blog/search_page.html',
+                  {'title': 'Блог', 'posts': posts, 'users': users, 'plants': plants, 'user': request.user,
+                   'category': category, 'search': search})
