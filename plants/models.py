@@ -31,6 +31,7 @@ class Plant(models.Model):
     tags = models.CharField(max_length=255, blank=True)
     rating = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], default=0, blank=True)
     category = models.ForeignKey(Category, related_name='Категория', null=True, on_delete=models.SET_NULL)
+
     # family = models.ForeignKey(Family, related_name='Семейство', null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
@@ -61,7 +62,8 @@ class Review(models.Model):
     published_date = models.DateField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
-    readers = models.ManyToManyField(User, related_name='reviews', blank=True)
+    likes = models.PositiveIntegerField(blank=True, default=0)
+    # readers = models.ManyToManyField(User, related_name='reviews', blank=True)
 
     def __str__(self):
         return self.title
@@ -74,5 +76,3 @@ class Review(models.Model):
         verbose_name_plural = 'Отзывы'
         ordering = ['title']
         unique_together = ('user', 'plant')
-
-

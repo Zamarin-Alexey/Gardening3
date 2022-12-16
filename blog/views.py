@@ -33,6 +33,8 @@ def home_page(request, category='popular', prev_search=None):
 
 def post_page(request, post_id):
     post = Post.objects.get(pk=post_id)
+    extend_user = ExtendUser.objects.get(user=User.objects.get(pk=request.user.id))
+    is_liked = extend_user.liked_posts.filter(pk=post.pk)
     if request.method == 'POST':
         form = AddCommentForm(request.POST, request.FILES)
         if form.is_valid():
@@ -49,8 +51,7 @@ def post_page(request, post_id):
         comments = Comment.objects.filter(post_id=post)
     return render(request, 'blog/post.html',
                   {'title': f"{post.title} | {user.username}", 'post': post, 'images': images, 'user': user, 'profile':
-                      profile,
-                   'comments': comments, 'comment_form': form})
+                      profile, 'comments': comments, 'comment_form': form, 'is_liked': is_liked})
 
 
 @login_required
@@ -113,25 +114,3 @@ def like_post(request, post_id, user_id):
     post.save()
     extend_user.save()
     return redirect(post)
-
-
-def global_search(request, category='popular', prev_search=None):
-    search = request.GET.get('global_search')
-    if not search:
-        search = prev_search
-
-    posts, users, plants = None, None, None
-
-    if category == 'posts':
-        posts = Post.objects.filter(
-            Q(title__contains=search) | Q(body__contains=search) | Q(tags__contains=search))
-    elif category == 'plants':
-        plants = Post.objects.filter(
-            Q(title__contains=search) | Q(body__contains=search) | Q(tags__contains=search))
-    else:
-        users = Post.objects.filter(
-            Q(title__contains=search) | Q(body__contains=search) | Q(tags__contains=search))
-
-    return render(request, 'blog/search_page.html',
-                  {'title': 'Блог', 'posts': posts, 'users': users, 'plants': plants, 'user': request.user,
-                   'category': category, 'search': search})

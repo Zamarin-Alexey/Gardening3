@@ -31,11 +31,6 @@
 
         <div class="d-flex align-items-center" style="margin-right: 15%; margin-left: auto">
 
-            <form class="me-3" action="{% url 'search_page' 'plants' None %}">
-                <input name="global_search" type="search" class="form-control" placeholder="Поиск по сайту"
-                       aria-label="Search" value={% if not search %} '' {% else %} {{ search }} {% endif %}>
-            </form>
-
             {% if request.user.is_authenticated %}
                 <a href="#" class="nav-link d-flex align-items-center dropdown-toggle" id="dropdownMenuUser"
                    data-bs-toggle="dropdown" aria-expanded="false">

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load bootstrap_icons %}
 {% load static %}
 {% load django_bootstrap5 %}
 
@@ -15,13 +16,16 @@
                 </a>
                 <div class="likes">Оценили {{ post.likes }} пользователей</div>
                 <a href="{% url 'like_post' post.pk request.user.pk %}" style="float: right; margin-left: auto">
-                    <button type="button" class="btn btn-success h-btn"
-                            style="margin-left: auto; height: 40px; width: 200px;">Мне нравится
+                    <button type="button"
+                            class="btn {% if is_liked %}btn-success {% else %} btn-light {% endif %} h-btn"
+                            style="margin-left: auto; height: 40px; width: 50px;">
+                        {% if  post in request.user.extend_user.liked_posts %}{% bs_icon 'heart-fill' %} {% else %}
+                            {% bs_icon 'heart' %}{% endif %}
                     </button>
                 </a>
                 {% if user == request.user %}
 
-                    <a href="{% url 'edit_post' post.pk %}" style="float: right; margin-left: auto">
+                    <a href="{% url 'edit_post' post.pk %}" style="float: right; margin-left: 10px">
                         <button type="button" class="btn btn-success h-btn"
                                 style="margin-left: auto; height: 40px; width: 200px;">Редактировать пост
                         </button>

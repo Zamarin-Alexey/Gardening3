@@ -30,6 +30,7 @@ class ExtendUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     plants = models.ManyToManyField(Plant)
     liked_posts = models.ManyToManyField(Post)
+    liked_reviews = models.ManyToManyField(Review)
 
 # class UserFollowing(models.Model):
 #     user_id = models.ForeignKey("User", related_name="following", on_delete=models.CASCADE)

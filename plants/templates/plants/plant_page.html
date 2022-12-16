@@ -1,32 +1,46 @@
 {% extends 'base.html' %}
+{% load bootstrap_icons %}
 {% load django_bootstrap5 %}
 {% block content %}
     {{ plant.title }}
     {{ plant.rating }}
-{#    <a href="{% url 'add_review' %}" class="btn btn-outline-danger btn-sm btn-add-plant">Оценить</a>#}
+    {#    <a href="{% url 'add_review' %}" class="btn btn-outline-danger btn-sm btn-add-plant">Оценить</a>#}
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addReview"
-            data-bs-whatever='{{ plant.title }}'>Добавить рецензию</button>
+            data-bs-whatever='{{ plant.title }}'>Добавить рецензию
+    </button>
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+    {% for review in reviews %}
+        {{ review.title }}
+        <a href="{% url 'delete_review' review.id %}" class="btn btn-outline-danger btn-sm">Удалить</a>
 
-<div class="modal fade" id="addReview" tabindex="-1" aria-labelledby="addReviewLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addReviewLabel">Новая рецензия</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-      </div>
-      <div class="modal-body">
-        <form method="POST" id="addReviewForm" action="{% url 'add_review' plant.id%}">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            <button type="submit" class="btn btn-primary">Отправить сообщение</button>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-        <button type="submit" class="btn btn-primary">Отправить сообщение</button>
-      </div>
+        <a href="{% url 'like_review' review.id %}" class="btn btn-outline-danger btn-sm">
+            {% if review in request.user.extend_user.liked_reviews %}{% bs_icon 'heart-fill' %} {% else %}
+                {% bs_icon 'heart' %}{% endif %}</a>
+    {% endfor %}
+    <button type="button" class="btn btn-primary">Добавить рецензию</button>
+
+    <div class="modal fade" id="addReview" tabindex="-1" aria-labelledby="addReviewLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addReviewLabel">Новая рецензия</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="addReviewForm" action="{% url 'add_review' plant.id %}">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <button type="submit" class="btn btn-primary">Отправить сообщение</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Отправить сообщение</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
 {% endblock %}
