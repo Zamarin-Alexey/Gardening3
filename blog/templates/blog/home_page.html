@@ -57,8 +57,10 @@
 
                     <div class="post-container">
                         <div class="my_row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                            <img height="200" width="auto !important" src="{{ post.image.url }}" alt="">
-                            <div class="col p-4 d-flex flex-column position-static">
+                                {% if post.preview %}
+                                    <img width="100%" src="{{ post.preview.url }}" alt="">
+                                {% endif %}
+                            <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
                                 <h3 class="card-element" style="margin-top: 0">{{ post.title }}</h3>
                                 <p class="card-text card-element">{{ post.body|safe }}</p>
                                 <div class="card-element" style="display: flex">

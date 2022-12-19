@@ -31,6 +31,7 @@ class Plant(models.Model):
     tags = models.CharField(max_length=255, blank=True)
     rating = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)], default=0, blank=True)
     category = models.ForeignKey(Category, related_name='Категория', null=True, on_delete=models.SET_NULL)
+    preview = models.ImageField(blank=True, upload_to='images/', verbose_name='Превью')
 
     # family = models.ForeignKey(Family, related_name='Семейство', null=True, on_delete=models.SET_NULL)
 
@@ -57,7 +58,7 @@ class ImagePlant(models.Model):
 
 class Review(models.Model):
     title = models.CharField(max_length=255)
-    body = models.TextField
+    body = models.TextField(verbose_name='Текст рецензии')
     estimation = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)])
     published_date = models.DateField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

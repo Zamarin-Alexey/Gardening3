@@ -1,60 +1,48 @@
+{% extends 'base.html' %}
+{% load bootstrap_icons %}
 {% load static %}
-<!doctype html>
-<html lang="ru">
-<head>
-    {# Load the tag library #}
-    {% load django_bootstrap5 %}
-    {% load bootstrap_icons %}
-    {# Load CSS and JavaScript #}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-
-    {# Display django.contrib.messages as Bootstrap alerts #}
-    {% bootstrap_messages %}
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ description }}">
-    <title>{{ title }}</title>
-    <meta name="theme-color" content="#7952b3">
-    <link rel="shortcut icon" href="{% static 'global/images/logo.png' %}" type="image/png">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-{% load static %}
+{% load django_bootstrap5 %}
+{% load bootstrap_icons %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 
 {% block content %}
-    {% if plants %}
-        <section id="gallery">
-          <div class="container">
-            <div class="row">
+    <div class="width-organizer">
 
-        {% for plant in plants %}
-            <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="/media/default_avatar.png" class="d-block w-100" alt="">
+        {% if plants %}
+
+            <div class="posts row mb-2">
+
+                {% for plant in plants %}
+
+                    <div class="post-container">
+                        <div class="my_row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                            {% if plant.preview %}
+                                <img width="100%" src="{{ plant.preview.url }}" alt="">
+                            {% endif %}
+                            <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
+                                <h3 class="card-element" style="margin-top: 0">{{ plant.title }}</h3>
+                                <p class="card-text card-element">{{ plant.description|safe }}</p>
+                                <div class="card-element" style="display: flex">
+                                    {% if plant.tags %}
+                                        <strong class="d-inline-block text-primary">{{ plant.tags }}</strong>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <a class="card-element" href="{% url 'plant_page' plant.pk %}">Подробнее</a>
+                                </div>
                             </div>
+
                         </div>
                     </div>
+                {% endfor %}
 
-                    <img src="" alt="" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ plant.title }}</h5>
-                        <p class="card-text">{{ plant.description }}</p>
-                        <a href="{% url 'plant_page' plant.pk %}" class="btn btn-outline-success btn-sm">Показать
-                            полностью</a>
-                    </div>
-                </div>
             </div>
-        {% endfor %}
-            </div>
-          </div>
-        </section>
-    {% else %}
-        <p>Тут пока ничего нет</p>
-    {% endif %}
+        {% else %}
+            <p style="margin-top: 20px; font-size: large">Тут пока пусто</p>
+        {% endif %}
+    </div>
 {% endblock %}
 
 

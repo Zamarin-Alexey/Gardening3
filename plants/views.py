@@ -1,6 +1,6 @@
 import datetime
 
-from django.db.models import Avg
+from django.db.models import Avg, Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -23,10 +23,13 @@ def calc_rating(plant):
 
 def show_plants(request, param):
     if param == 'all':
-        plants = Plant.objects.all()
-        images = ImagePlant.objects.all()
-        return render(request, 'plants/show_plants.html', {'title': 'Библиотека растений', 'plants': plants,
-                                                           'images': images})
+        search = request.GET.get('search')
+        if search:
+            plants = Plant.objects.filter(
+                Q(title__contains=search) | Q(review__body__contains=search) | Q(tags__contains=search))
+        else:
+            plants = Plant.objects.all()
+        return render(request, 'plants/show_plants.html', {'title': 'Библиотека растений', 'plants': plants})
     else:
         plants = request.user.extenduser.plants.all()
         return render(request, 'plants/show_my_plants.html', {'title': 'Мои растения', 'plants': plants})
@@ -35,10 +38,10 @@ def show_plants(request, param):
 def plant_page(request, plant_id=None):
     plant = get_object_or_404(Plant, pk=plant_id)
     form = ReviewForm()
-    reviews = Review.objects.filter(plant=plant_id)
-
+    reviews = Review.objects.filter(plant=plant)
+    images = ImagePlant.objects.filter(plant=plant)
     return render(request, 'plants/plant_page.html',
-                  {'title': plant.title, 'plant': plant, 'form': form, 'reviews': reviews})
+                  {'title': plant.title, 'plant': plant, 'form': form, 'reviews': reviews, 'images': images})
 
 
 @login_required
@@ -116,4 +119,5 @@ def like_review(request, review_id):
         review.likes -= 1
         extend_user.liked_reviews.remove(review)
     review.save()
+    extend_user.save()
     return redirect(review.plant)

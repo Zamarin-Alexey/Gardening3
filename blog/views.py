@@ -11,6 +11,7 @@ from users.models import *
 
 def home_page(request, category='popular', prev_search=None):
     search = request.GET.get('search')
+    all_images = Image.objects.all()
     if search:
         founded_posts = Post.objects.filter(
             Q(title__contains=search) | Q(body__contains=search) | Q(tags__contains=search))
@@ -61,8 +62,11 @@ def add_post(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
+            images = request.FILES.getlist('images')
+            if images:
+                post.preview = images[0]
             post.save()
-            for f in request.FILES.getlist('images'):
+            for f in images:
                 data = f.read()
                 image = Image(post=post)
                 image.image.save(f.name, ContentFile(data))

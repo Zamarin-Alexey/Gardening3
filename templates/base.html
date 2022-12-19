@@ -61,28 +61,22 @@
     <ul class="nav nav-pills flex-column mb-auto">
         {% if request.user.is_authenticated %}
             <li class="nav-item">
-                <a href="{% url 'plants' 'my-plant' %}" class="nav-link active" aria-current="page">
-                    Мои растения
+                <a href="{% url 'blog_home' %}" class="nav-link active" aria-current="page">
+                    Блог
                 </a>
             </li>
         {% endif %}
         <li>
-            <a href="{% url 'blog_home' %}" class="nav-link link-dark">
-                Блог
+            <a href="{% url 'plants' 'my-plant' %}" class="nav-link link-dark">
+                Мои растения
             </a>
         </li>
-
-        <li>
-            <a href="#" class="nav-link link-dark">
-                Магазин
-            </a>
-        </li>
-
         <li>
             <a href="{% url 'plants' 'all' %}" class="nav-link link-dark">
                 Библиотека растений
             </a>
         </li>
+
     </ul>
     <hr>
 </div>
@@ -95,7 +89,7 @@
 
     <script type="text/javascript" src="{% static 'global/js/main.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    {% block javascript %}{% endblock %}
 </div>
 </body>
 </html>
