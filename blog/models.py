@@ -1,11 +1,6 @@
-import sys
-from io import BytesIO
-
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
-from PIL import Image as PImage
 
 
 class Post(models.Model):
@@ -15,7 +10,7 @@ class Post(models.Model):
     publish_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
     likes = models.IntegerField(blank=True, default=0)
-    preview = models.ImageField(blank=True, upload_to='images/')
+    preview = models.ImageField(blank=True, upload_to='images/previews/')
 
     def __str__(self):
         return self.title
@@ -30,7 +25,7 @@ class Post(models.Model):
 
 class Image(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/main')
 
 
 class Comment(models.Model):

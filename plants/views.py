@@ -5,7 +5,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.messages import get_messages
 
 from users.models import ExtendUser
 from .models import *

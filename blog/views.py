@@ -15,7 +15,7 @@ def home_page(request, category='popular', prev_search=None):
     if search:
         founded_posts = Post.objects.filter(
             Q(title__contains=search) | Q(body__contains=search) | Q(tags__contains=search))
-    elif prev_search:
+    elif prev_search and prev_search != 'None':
         search = prev_search
         founded_posts = Post.objects.filter(
             Q(title__contains=search) | Q(body__contains=search) | Q(tags__contains=search))
@@ -64,7 +64,7 @@ def add_post(request):
             post.user = request.user
             images = request.FILES.getlist('images')
             if images:
-                post.preview = images[0]
+                post.preview = images.pop(0)
             post.save()
             for f in images:
                 data = f.read()
