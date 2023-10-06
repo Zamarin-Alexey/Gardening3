@@ -1,0 +1,24 @@
+{% extends 'users/users_base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+    <main class="form-signin w-100 m-auto">
+        <form method="post">
+
+            {% csrf_token %}
+            <div style="display: inline-block">
+                <img class="mb-4" src="{% static 'global/images/logo.png' %}" alt="" width="72" height="72">
+                <h1 class="h3 mb-3 fw-normal">Создание аккаунта</h1>
+            </div>
+
+            {% bootstrap_form form layout='' %}
+            <button type="submit" class="btn btn-success btn-block">Создать аккаунт</button>
+        </form>
+    </main>
+
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'users/js/user_base.js' %}"></script>
+{% endblock javascript%}

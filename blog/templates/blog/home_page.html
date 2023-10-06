@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="category-sidebar">
+
+        {% if category == 'popular' %}
+            <a>
+                <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Популярные</button>
+            </a>
+        {% else %}
+            <a href="{% url 'category' 'popular' search %}">
+                <button type="button" class="btn btn-light h-btn" style="margin-left: auto">Популярные</button>
+            </a>
+        {% endif %}
+        {% if category == 'my' %}
+            <a>
+                <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Мои</button>
+            </a>
+        {% else %}
+            <a href="{% url 'category' 'my' search %}">
+                <button type="button" class="btn btn-light h-btn" style="margin-left: auto">Мои</button>
+            </a>
+        {% endif %}
+        {% if category == 'all' %}
+            <a>
+                <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Все</button>
+            </a>
+        {% else %}
+            <a href="{% url 'category' 'all' search %}">
+                <button type="button" class="btn btn-light h-btn" style="margin-left: auto">Все</button>
+            </a>
+        {% endif %}
+
+        <form class="me-3" style="margin-left: 20px">
+            <input name="search" type="search" class="form-control" placeholder="Найти пост" aria-label="Search"
+                   value={% if not search %} '' {% else %} {{ search }} {% endif %}>
+        </form>
+    </div>
+
+    <div class="width-organizer">
+
+        {% if user.is_authenticated %}
+
+            <a href="{% url 'add_post' %}" style="float: right">
+                <button type="button" class="btn btn-success h-btn" style="margin-left: auto">Добавить пост</button>
+            </a>
+
+        {% endif %}
+
+        {% if posts %}
+
+            <div class="posts row mb-2">
+
+                {% for post in posts %}
+
+                    <div class="post-container">
+                        <div class="my_row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                                {% if post.preview %}
+                                    <img width="100%" src="{{ post.preview.url }}" alt="">
+                                {% endif %}
+                            <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
+                                <h3 class="card-element" style="margin-top: 0">{{ post.title }}</h3>
+                                <p class="card-text card-element">{{ post.body|safe }}</p>
+                                <div class="card-element" style="display: flex">
+                                    {% if post.tags %}
+                                        <strong class="d-inline-block text-primary">{{ post.tags }}</strong>
+                                    {% endif %}
+                                    <div class="text-muted" style="margin-left: auto">{{ post.publish_date }}</div>
+                                </div>
+                                <a class="card-element" href="{% url 'post' post.pk %}">Открыть целиком</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        {% else %}
+            <p style="margin-top: 20px; font-size: large">Посты отсутствуют</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

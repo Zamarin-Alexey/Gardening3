@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load bootstrap_icons %}
+{% load django_bootstrap5 %}
+{% block content %}
+    <div class="w-75">
+        <div class="post">
+            <div class="post-header" style="display: flex">
+                <div class="likes">Средняя пользовательская оценка: {{ plant.rating }}</div>
+            </div>
+
+            <div class="post-body  border rounded">
+                <h1 class="title">{{ plant.title }}</h1>
+                <div class="">
+                    {% if images %}
+                        <div id="carouselExampleIndicators" class="carousel slide image_carousel w-50"
+                             data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for image in images %}
+                                    <div class="carousel-item active">
+                                        <img src="{{ image.image.url }}" class="d-block rounded carousel_image"
+                                             alt="...">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#carouselExampleIndicators"
+                                    data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Предыдущий</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                    data-bs-target="#carouselExampleIndicators"
+                                    data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Следующий</span>
+                            </button>
+                        </div>
+
+                    {% endif %}
+
+                    <div style="padding-top: 15px">
+                        {{ plant.description|safe }}
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="post-footer">
+                <div>Теги: {{ plant.tags }}</div>
+            </div>
+        </div>
+        <hr>
+
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        <div style="margin: 15px">
+            <div style="display: flex">
+                Рецензии
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addReview"
+                        style="margin-left: auto; float: right"
+                        data-bs-whatever='{{ plant.title }}'>Добавить рецензию
+                </button>
+            </div>
+            {% for review in reviews %}
+                <div class="comment border rounded">
+                <div style="display: flex">
+                    <a class="account-row" href="{% url 'profile_form' review.user.pk %}" style="width: fit-content">
+                        <div>
+                            <img class="rounded-circle account-img-post" src="{{ review.user.profile.avatar.url }} "
+                                 style="cursor: pointer;" alt=""/>
+                        </div>
+                        <div style="padding: 5px; align-items: center">{{ review.user.username }}</div>
+
+                    </a>
+                    <div class="likes">Оценили {{ review.likes }} пользователей</div>
+                    <a href="{% url 'like_review' review.pk %}" style="float: right; margin-left: auto">
+                        <button type="button"
+                                class="btn {% if is_liked %}btn-success {% else %} btn-light {% endif %} h-btn"
+                                style="margin-left: auto; height: 40px; width: 50px;">
+                            {% if review in request.user.extend_user.liked_reviews %}
+                                {% bs_icon 'heart-fill' %} {% else %}
+                                {% bs_icon 'heart' %}{% endif %}
+                        </button>
+                    </a>
+                </div>
+                <h3>{{ review.title }}</h3>
+                <p>{{ review.body }}</p>
+                <p>Оценка: {{ review.estimation }}</p>
+
+                {% if review.user == request.user %}
+                    <a href="{% url 'delete_review' review.id %}" class="btn btn-outline-danger btn-sm"
+                       style="margin-left: auto;display: flex;width: fit-content;">Удалить</a>
+                {% endif %}
+            {% endfor %}
+            </div>
+            <div class="modal fade" id="addReview" tabindex="-1" aria-labelledby="addReviewLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form method="POST" id="addReviewForm" action="{% url 'add_review' plant.id %}">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addReviewLabel">Новая рецензия</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Закрыть"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                {% csrf_token %}
+                                {% bootstrap_form form %}
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                <button type="submit" class="btn btn-success">Опубликовать</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load bootstrap_icons %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+    <div class="w-75">
+        <div class="post">
+            <div class="post-header" style="display: flex">
+                <a class="account-row" href="{% url 'profile_form' post.user.pk %}">
+                    <div>
+                        <img class="rounded-circle account-img-post" src="{{ profile.avatar.url }} "
+                             style="cursor: pointer;" alt=""/>
+                    </div>
+                    <div style="padding: 5px; align-items: center">{{ user.username }}</div>
+                </a>
+                <div class="likes">Оценили {{ post.likes }} пользователей</div>
+                <a href="{% url 'like_post' post.pk request.user.pk %}" style="float: right; margin-left: auto">
+                    <button type="button"
+                            class="btn {% if is_liked %}btn-success {% else %} btn-light {% endif %} h-btn"
+                            style="margin-left: auto; height: 40px; width: 50px;">
+                        {% if  post in request.user.extend_user.liked_posts %}{% bs_icon 'heart-fill' %} {% else %}
+                            {% bs_icon 'heart' %}{% endif %}
+                    </button>
+                </a>
+                {% if user == request.user %}
+
+                    <a href="{% url 'edit_post' post.pk %}" style="float: right; margin-left: 10px">
+                        <button type="button" class="btn btn-success h-btn"
+                                style="margin-left: auto; height: 40px; width: 200px;">Редактировать пост
+                        </button>
+                    </a>
+                {% endif %}
+            </div>
+
+            <div class="post-body  border rounded">
+                <h1 class="title">{{ post.title }}</h1>
+                <div class="">
+                    {% if images %}
+                        <div id="carouselExampleIndicators" class="carousel slide image_carousel w-50"
+                             data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for image in images %}
+                                    <div class="carousel-item active">
+                                        <img src="{{ image.image.url }}" class="d-block rounded carousel_image"
+                                             alt="...">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#carouselExampleIndicators"
+                                    data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Предыдущий</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                    data-bs-target="#carouselExampleIndicators"
+                                    data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Следующий</span>
+                            </button>
+                        </div>
+
+                    {% endif %}
+
+                    <div style="padding-top: 15px">
+                        {{ post.body|safe }}
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="post-footer">
+                <div>Теги: {{ post.tags }}</div>
+                <div style="margin-left: auto">Дата публикации: {{ post.publish_date }}</div>
+            </div>
+        </div>
+        <hr>
+        <div class="comments">
+            Комментарии
+            {% for comment in comments %}
+                <div class="comment border rounded">
+                    <a class="account-row" href="{% url 'profile_form' comment.user.pk %}">
+                        <div>
+                            <img class="rounded-circle account-img-post" src="{{ comment.user.profile.avatar.url }} "
+                                 style="cursor: pointer;" alt=""/>
+                        </div>
+                        <div style="padding: 5px; align-items: center">{{ comment.user.username }}</div>
+                    </a>
+                    <div style="display: table-header-group">
+                        {% if comment.image %}
+                            <img src="{{ comment.image.url }}" class="rounded comment-image" alt="...">
+                        {% endif %}
+                        {% if comment.body %}
+                            {{ comment.body }}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <hr>
+            {% if request.user.is_authenticated %}
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% bootstrap_form comment_form %}
+
+                    <button class="btn btn-lg btn-success" style="height: fit-content" type="submit">Отправить</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
