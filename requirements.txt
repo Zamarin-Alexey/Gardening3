@@ -1,0 +1,4 @@
+Django==4.2.8
+django-bootstrap-icons==0.8.7
+django-bootstrap5==23.3
+Pillow==10.1.0
