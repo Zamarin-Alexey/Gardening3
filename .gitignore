@@ -5,3 +5,4 @@ profile_images/**/*
 /media/
 db.sqlite3
 /venv/
+venv
