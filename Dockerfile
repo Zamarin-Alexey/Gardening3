@@ -1,6 +1,6 @@
 FROM python:latest
 
-WORKDIR /Gardening3
+WORKDIR /usr/src/Gardening3
 
 RUN apt-get update \
       && apt-get install -y postgresql postgresql-contrib libpq-dev python3-dev

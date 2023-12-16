@@ -13,10 +13,11 @@ services:
       && python manage.py migrate
       && python manage.py runserver 0.0.0.0:8000
       "
-    environment:
-      - DATABASE_URL=postgresql://siavi@db:5432/postgres
+#    environment:
+#      - DATABASE_URL=postgresql://siavi@db:5432/postgres
     volumes:
-      - ./Gardening3:/Gardening3
+#      - ./Gardening3:/Gardening3
+      - .:/usr/src/Gardening3
     # Открытие порта на хостовой машине и перенаправление на порт в контейнере
     ports:
       - "8000:8000"
