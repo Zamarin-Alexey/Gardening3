@@ -14,11 +14,11 @@ class Profile(models.Model):
                                upload_to=user_directory_path,
                                verbose_name='Фотография')
     bio = models.TextField(blank=True, verbose_name='Статус')
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)  # Используйте OneToOneField
     plants = models.ManyToManyField(Plant)
     posts = models.ManyToManyField(Post)
 
-    def _str_(self):
+    def __str__(self):
         return self.user.username
 
     class Meta:
@@ -27,10 +27,14 @@ class Profile(models.Model):
 
 
 class ExtendUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)  # Добавьте unique=True
     plants = models.ManyToManyField(Plant)
     liked_posts = models.ManyToManyField(Post)
     liked_reviews = models.ManyToManyField(Review)
+
+    def __str__(self):  # Замените _str_ на __str__
+        return self.user.username
+
 
 # class UserFollowing(models.Model):
 #     user_id = models.ForeignKey("User", related_name="following", on_delete=models.CASCADE)

@@ -26,12 +26,11 @@ SECRET_KEY = 'django-insecure-u1r!_)jpt-ebq-fd8e*tul84-pswnvkr*c5ae%8oj=-s+6zvn+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['158.160.104.118', 'localhost', '127.0.0.1', '0.0.0.0', ]
+ALLOWED_HOSTS = []
 
 # Application definition
 
 INSTALLED_APPS = [
-    #'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,7 +42,6 @@ INSTALLED_APPS = [
     'plants.apps.PlantsConfig',
     'django_bootstrap5',
     'django_bootstrap_icons',
-    'django.contrib.postgres',
 ]
 
 MIDDLEWARE = [
@@ -77,16 +75,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Gardening.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',   # Используется PostgreSQL
-        'NAME': 'postgres', # Имя базы данных
+        'NAME': 'Gardening', # Имя базы данных
         'USER': 'postgres', # Имя пользователя
-        'PASSWORD': 'postgres', # Пароль пользователя
-        'HOST': 'pgdb', # Наименование контейнера для базы данных в Docker Compose
+        'PASSWORD': '1928', # Пароль пользователя
+        'HOST': '127.0.0.1', # Наименование контейнера для базы данных в Docker Compose
         'PORT': '5432',  # Порт базы данных
     }
 }
