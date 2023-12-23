@@ -17,7 +17,7 @@ services:
 #      - DATABASE_URL=postgresql://siavi@db:5432/postgres
     volumes:
 #      - ./Gardening3:/Gardening3
-      - .:/usr/src/Gardening3
+       - .:/usr/src/Gardening3
     # Открытие порта на хостовой машине и перенаправление на порт в контейнере
     ports:
       - "8000:8000"
@@ -26,18 +26,17 @@ services:
       - pgdb
 
   pgdb:
-    # Использование готового образа postgres
     image: postgres
-    # Задание переменных окружения для контейнера с postgres
+    restart: always
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-     # Задание имени контейнера для сервиса pgdb
-    container_name: pgdb
-     # Связывание тома с директорией в контейнере для сохранения данных postgres
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
-      - pgdbdata:/var/lib/postgresql/data/
+      - ../2. Init Database:/docker-entrypoint-initdb.d
+      - pgdb-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
 volumes:
-  pgdbdata: null
+  pgdb-data:

@@ -1,0 +1,56 @@
+version: v2beta1
+name: pgdb
+
+# This is a list of `deployments` that DevSpace can create for this project
+deployments:
+  pgdb:
+    # This deployment uses `helm` but you can also define `kubectl` deployments or kustomizations
+    helm:
+      chart:
+        name: component-chart
+        repo: https://charts.devspace.sh
+      # Under `values` we can define the values for this Helm chart used during `helm install/upgrade`
+      # You may also use `valuesFiles` to load values from files, e.g. valuesFiles: ["values.yaml"]
+      values:
+        containers:
+          - image: postgres
+            env:
+              - name: POSTGRES_DB
+                value: postgres
+              - name: POSTGRES_PASSWORD
+                value: postgres
+              - name: POSTGRES_USER
+                value: postgres
+            #name: pgdb-container
+        restartPolicy: Always
+        service:
+          ports:
+            - containerPort: 5432
+              port: 5432
+              protocol: TCP
+        volumes:
+          - name: pgdb-data
+            size: 5Gi
+          - emptyDir: {}
+            name: volume-1
+
+# This is a list of `dev` containers that are based on the containers created by your deployments
+dev:
+  pgdb:
+    labelSelector:
+      app.kubernetes.io/component: pgdb
+    # Sync files between the local filesystem and the development container
+    sync:
+      - path: ../2. Init Database:/docker-entrypoint-initdb.d
+        startContainer: true
+    # Forward the following ports to be able access your application via localhost
+    ports:
+      - port: "5432"
+
+# Define dependencies to other projects with a devspace.yaml
+# dependencies:
+#   api:
+#     git: https://...  # Git-based dependencies
+#     tag: v1.0.0
+#   ui:
+#     path: ./ui        # Path-based dependencies (for monorepos)

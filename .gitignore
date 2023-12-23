@@ -6,3 +6,6 @@ profile_images/**/*
 db.sqlite3
 /venv/
 venv
+
+# Ignore DevSpace cache and log folder
+.devspace/
